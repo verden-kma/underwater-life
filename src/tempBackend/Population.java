@@ -2,14 +2,11 @@ package tempBackend;
 
 
 public class Population {
-    //we only have and work with one instance of this class because we have only one lake/river
-    {
-        instance = new Population();
-    }
 
+    //we only have and work with one instance of this class because we have only one lake/river
     private Population(){}
 
-    private static Population instance;
+    private static Population instance = new Population();
 
     public static Population getInstance(){
         return instance;
@@ -36,6 +33,14 @@ public class Population {
 
     public long getCurrentPredatorPopulation() {
         return currentPredatorPopulation;
+    }
+
+    public void setCurrentPreyPopulation(long currentPreyPopulation) {
+        this.currentPreyPopulation = currentPreyPopulation;
+    }
+
+    public void setCurrentPredatorPopulation(long currentPredatorPopulation) {
+        this.currentPredatorPopulation = currentPredatorPopulation;
     }
 
     public String toString(){
