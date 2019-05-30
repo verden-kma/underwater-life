@@ -1,12 +1,13 @@
 package sample;
 
+import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import tempBackend.Population;
-
 
 import static java.lang.Thread.sleep;
 
@@ -24,35 +25,27 @@ public class Controller {
     @FXML
     Button fishingBegin;
 
-    private volatile boolean fishingBegun;
+    @FXML
+    Label fishingIndicator;
 
+    private volatile boolean fishingBegun;
+    private double NET_CATCH_PERCENT = 0.1;
     private PopulationUpdater pu = new PopulationUpdater();
+    private FishingImpact fimp = new FishingImpact();
     private Population population = Population.getInstance();
     Object lock = new Object();
 
     @FXML
     public void startSimulation(){
-        preyLabel.textProperty().bind(pu.messageProperty());
+        preyLabel.textProperty().bind(Bindings.convert(pu.messageProperty()));
         predatorLabel.textProperty().bind(pu.titleProperty());
         pu.start();
-        System.out.println("button");
         simulationButton.setDisable(true);
     }
 
     @FXML
     public void goFishing(){
-        fishingBegun = true;
-        synchronized (lock) {
-            long newPreyCP = Math.round(population.getCurrentPreyPopulation()*0.9);
-            population.setCurrentPreyPopulation(newPreyCP);
-            fishingBegun = false;
-            try {
-                sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            lock.notifyAll();
-        }
+            fimp.restart();
     }
 
     private class PopulationUpdater extends Service<Void> {
@@ -69,7 +62,7 @@ public class Controller {
                                     e.printStackTrace();
                                 }
                             }
-                            updateMessage("Prey: " + population.getCurrentPreyPopulation());
+                            updateMessage("Prey: " + population.getCurrentPreyPopulation()/* +"@Predator: "+ population.getCurrentPredatorPopulation()*/);
                             updateTitle("Predator: " + population.getCurrentPredatorPopulation());
                             population.updatePopulationCount();
                             try {
@@ -91,6 +84,58 @@ public class Controller {
         }
 
 
+    }
+
+    private class FishingImpact extends Service<Void>{
+        @Override
+        protected Task createTask(){
+            return new Task(){
+                @Override
+                protected Void call(){
+                    fishingBegun = true;
+                    synchronized (lock) {
+                        long preyCP = population.getCurrentPreyPopulation();
+                        //replaces 'null' value of message with current population
+                        updateMessage("Prey: " + preyCP);
+                        long fishCaught = Math.round(preyCP*NET_CATCH_PERCENT);
+                        for (double i = 0.25; i <= 1; i+= 0.25) {
+                            try {//sleep assures that rebinding is established
+                                sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            population.setCurrentPreyPopulation(Math.round(preyCP - fishCaught * i));
+                            updateMessage("Prey: " + population.getCurrentPreyPopulation());
+                        }
+                        try {
+                            sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        fishingBegun = false;
+                    }
+                 return null;
+                }
+
+                protected void running(){
+                    fishingIndicator.setText("Fishing begun. 5 seconds for animation.\nDecreasing of population is split into 4 parts.");
+                    preyLabel.textProperty().unbind();
+                    preyLabel.textProperty().bind(messageProperty());
+                }
+
+                protected void succeeded(){
+                    preyLabel.textProperty().unbind();
+                    preyLabel.textProperty().bind(pu.messageProperty());
+                    fishingIndicator.setText("awaiting...");
+                    synchronized (lock) {
+                        lock.notifyAll();
+                    }
+                }
+                protected void failed(){
+                    System.out.println("Exception!");
+                }
+            };
+        }
     }
 
 }
