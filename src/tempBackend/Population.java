@@ -12,8 +12,8 @@ public class Population {
         return instance;
     }
 
-    private long currentPreyPopulation = 4000;
-    private long currentPredatorPopulation = 1000;
+    private long preyPopulation = 4000;
+    private long predatorPopulation = /*2000*/300;
 
     private final double  preyGC = 5e-3;
     private final double  preyDC = 5e-6;
@@ -21,30 +21,55 @@ public class Population {
     private final double  predatorDC = 5e-3;
 
     public void updatePopulationCount(){
-        long preyCP = currentPreyPopulation;
-        long predCP = currentPredatorPopulation;
-        currentPreyPopulation = Math.round(preyCP + preyGC*preyCP - preyDC*preyCP*predCP);
-        currentPredatorPopulation = Math.round(predCP - predatorDC*predCP + predatorGC*preyCP*predCP);
+        long preyCP = preyPopulation;
+        long predCP = predatorPopulation;
+        preyPopulation = Math.round(preyCP + preyGC*preyCP - preyDC*preyCP*predCP);
+        predatorPopulation = Math.round(predCP - predatorDC*predCP + predatorGC*preyCP*predCP);
     }
 
-    public long getCurrentPreyPopulation() {
-        return currentPreyPopulation;
+    public long getPreyPopulation() {
+        return preyPopulation;
     }
 
-    public long getCurrentPredatorPopulation() {
-        return currentPredatorPopulation;
+    public long getPredatorPopulation() {
+        return predatorPopulation;
     }
 
-    public void setCurrentPreyPopulation(long currentPreyPopulation) {
-        this.currentPreyPopulation = currentPreyPopulation;
+    public void setPreyPopulation(long preyPopulation) {
+        this.preyPopulation = preyPopulation;
     }
 
-    public void setCurrentPredatorPopulation(long currentPredatorPopulation) {
-        this.currentPredatorPopulation = currentPredatorPopulation;
+    public void setPredatorPopulation(long predatorPopulation) {
+        this.predatorPopulation = predatorPopulation;
+    }
+
+    public long getNextPredatorUpdate(){
+        long tempPrey = preyPopulation;
+        long tempPredator = predatorPopulation;
+        updatePopulationCount();
+        long res = predatorPopulation;
+        preyPopulation = tempPrey;
+        predatorPopulation = tempPredator;
+        return res;
+    }
+
+    public Tuple<Long, Long> getMaxPopulations(){
+        long startPrey = preyPopulation;
+        long startPred = predatorPopulation;
+        long prey = 0;
+        long pred = 0;
+        for (int i = 0; i < 2000; i++){
+            updatePopulationCount();
+            prey = Math.max(prey, preyPopulation);
+            pred = Math.max(pred, predatorPopulation);
+        }
+        preyPopulation = startPrey;
+        predatorPopulation = startPred;
+        return new Tuple<>(prey, pred);
     }
 
     public String toString(){
-        return "Prey: "+ currentPreyPopulation+"\n"+
-                "Predator: "+ currentPredatorPopulation+"\n";
+        return "Prey: "+ preyPopulation +"\n"+
+                "Predator: "+ predatorPopulation +"\n";
     }
 }
