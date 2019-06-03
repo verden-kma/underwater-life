@@ -12,6 +12,7 @@ import tempBackend.Population;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static java.lang.String.valueOf;
 import static java.lang.Thread.sleep;
 
 public class Controller {
@@ -37,18 +38,31 @@ public class Controller {
     @FXML
     Label moneyLabel;
 
+    @FXML
+    Button sellButton;
+
     private volatile boolean pausePU;
     private volatile boolean preyPeak;
     private volatile boolean predPeak;
     private volatile boolean autoNotification;
     private volatile boolean monsterInvokedByFishing;
-    private int smallLootCount, largeLootCount;
+    private volatile boolean gameOver;
 
     private SimpleStringProperty preyProperty = new SimpleStringProperty();
     private SimpleStringProperty predatorProperty = new SimpleStringProperty();
-    private SimpleStringProperty money = new SimpleStringProperty();
-    private SimpleStringProperty preyLootMessage = new SimpleStringProperty("Small: " + smallLootCount);
-    private SimpleStringProperty predatorLootMessage = new SimpleStringProperty("Large: " + largeLootCount);
+    private SimpleStringProperty money = new SimpleStringProperty("100");
+
+    private SimpleStringProperty lootMessage = new SimpleStringProperty("0");
+    private final String PREY_LOOT_MESSAGE = "Small: ";
+    private final String PREDATOR_LOOT_MESSAGE = "Large: ";
+    private final String PREY_PROPERTY_PROMPT = "Prey: ";
+    private final String PREDATOR_PROPERTY_PROMPT = "Predator: ";
+    private final short PREY_PRICE = 1;
+    private final short PREDATOR_PRICE = 3;
+
+    private long lootCount;  //might be deleted
+    private String lootPrompt = ""; //lootCount and lootPrompt
+
 
     private double NET_CATCH_COEF = 0.1;
     private final double MONSTER_EAT = 0.2;
@@ -66,11 +80,25 @@ public class Controller {
     private final int FISHING_STEPS = 4;
     private final int MONSTER_STEPS = 5;
 
+    @FXML
     public void initialize() {
-        timer.schedule(timerTask, 15000, 10000);
+        moneyLabel.textProperty().bind(money);
+        lootLabel.textProperty().bind(lootMessage);
     }
 
-    private TimerTask timerTask = new TimerTask() {
+    private TimerTask rentPayment = new TimerTask() {
+        @Override
+        public void run() {
+            int newValue = Integer.parseInt(money.get()) - 1;
+            if (newValue < 0) {
+                System.out.println("You Lose!");
+                gameOver = true;
+                cancel();
+            } else Platform.runLater(() -> money.set(valueOf(newValue)));
+        }
+    };
+
+    private TimerTask monsterDigestion = new TimerTask() {
         @Override
         public void run() {
             monsterFoodDigested = true;
@@ -83,13 +111,22 @@ public class Controller {
         predatorLabel.textProperty().bind(predatorProperty);
         pu.start();
         simulationButton.setDisable(true);
-        //TODO: bind economics labels to fishingImpact
+        timer.schedule(monsterDigestion, 15000, 10000);
+        timer.schedule(rentPayment, 0, 150);
     }
 
     @FXML
     public void goFishing() {
         fimp.restart();
     }
+
+    @FXML
+    private void sellFish() {
+        short pricePerFish = preyFishing ? PREY_PRICE : PREDATOR_PRICE;
+        money.set(valueOf(Integer.parseInt(money.getValue()) + lootCount * pricePerFish));
+        lootMessage.set("0");
+    }
+
 
     private class PopulationUpdater extends Service<Void> {
         @Override
@@ -98,6 +135,7 @@ public class Controller {
                 @Override
                 protected Void call() {
                     while (true) {
+                        if (gameOver) break;
                         synchronized (populationLock) {
                             try {
                                 if (pausePU) {
@@ -147,6 +185,7 @@ public class Controller {
                             e.printStackTrace();
                         }
                     }
+                    return null;
                 }
             };
         }
@@ -178,7 +217,6 @@ public class Controller {
                     pausePU = true;
                     synchronized (populationLock) {/*ensures population updates are paused before proceeding*/ }
                     fishing(preyFishing);
-
                     pausePU = false;
                     //synchronized }
                     return null;
@@ -187,27 +225,23 @@ public class Controller {
 
                 private void fishing(boolean preyFishing) {
                     long CP = preyFishing ? population.getPreyPopulation() : population.getPredatorPopulation();
-                    String propertyPrompt = preyFishing ? "Prey: " : "Predator: ";
-                    String lootPrompt = preyFishing ? "Small: " : "Large: ";
-                    //how many fishes are in fisherman's nets at the moment
-                    long loot;
+                    String propertyPrompt = preyFishing ? PREY_PROPERTY_PROMPT : PREDATOR_PROPERTY_PROMPT;
+                    lootPrompt = preyFishing ? PREY_LOOT_MESSAGE : PREDATOR_LOOT_MESSAGE;
                     try {
                         sleep(PAUSE);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     for (double i = NET_CATCH_COEF / FISHING_STEPS; i <= NET_CATCH_COEF; i += NET_CATCH_COEF / FISHING_STEPS) {
-                        loot = Math.round(CP * i);
-                        population.setPreyPopulation(Math.round(CP - loot));
-                        long effectivelyFinalLoot = loot;
+                        lootCount = Math.round(CP * i);
+                        population.setPreyPopulation(Math.round(CP - lootCount));
                         Platform.runLater(() -> {
                             if (preyFishing) {
-                                preyLootMessage.set(lootPrompt + effectivelyFinalLoot);
                                 preyProperty.set(propertyPrompt + population.getPreyPopulation());
                             } else {
-                                predatorLootMessage.set(lootPrompt + effectivelyFinalLoot);
                                 predatorProperty.set(propertyPrompt + population.getPreyPopulation());
                             }
+                            lootMessage.set(lootPrompt + lootCount);
                         });
                         try {
                             sleep(PAUSE);
@@ -222,7 +256,6 @@ public class Controller {
                         monster.restart();
                         monsterInvokedByFishing = true;
                         cancel();
-                        return;
                     }
                 }
 
@@ -296,11 +329,12 @@ public class Controller {
 
                 @Override
                 protected void succeeded() {
-                    if (preyPeak) {
+                    /*if (preyPeak) {
                         preyPeak = false;
                     } else if (predPeak) {
                         predPeak = false;
-                    }
+                    }*/
+                    //TODO: timer task doesn't know about delays here. replace them with ordinary threads
                     monsterFoodDigested = false;
                     pausePU = false;
                     synchronized (populationLock) {
@@ -333,7 +367,7 @@ public class Controller {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("Met now.");
+            System.out.println("Meet now.");
             return sleepReminder;
         }
 
@@ -341,56 +375,41 @@ public class Controller {
             //number of steps passed before the meeting of monster and fisherman
             //'2/FISHING_STEPS' because fisherman travel in both ways
             long CP = preyIsVictim ? population.getPreyPopulation() : population.getPredatorPopulation();
-            String propertyPrompt = preyIsVictim ? "Prey: " : "Predator: ";
-            String lootPrompt = preyIsVictim ? "Small: " : "Large: ";
+            String propertyPrompt = preyIsVictim ? PREY_PROPERTY_PROMPT : PREDATOR_PROPERTY_PROMPT;
+            lootPrompt = preyIsVictim ? PREY_LOOT_MESSAGE : PREDATOR_LOOT_MESSAGE;
 
             double stepsPassedBefore = 1.0 / (1.0 / MONSTER_STEPS + 2.0 / FISHING_STEPS);
             int ispb = (int) stepsPassedBefore;
             long takenBefore = Math.round(CP * MONSTER_EAT * ispb / MONSTER_STEPS + CP * NET_CATCH_COEF * ispb / FISHING_STEPS);
             for (double i = 1.0 / ispb; i <= ispb; i += 1.0 / ispb) {
-                if (preyIsVictim) population.setPreyPopulation(CP - Math.round(takenBefore * i));
-                else population.setPredatorPopulation(CP - Math.round(takenBefore * i));
-                long loot = Math.round(CP * NET_CATCH_COEF * ispb / FISHING_STEPS * i);
-                Platform.runLater(() -> {
-                    if (preyIsVictim) {
-                        preyLootMessage.set(lootPrompt + loot);
-                        preyProperty.set(propertyPrompt + population.getPreyPopulation());
-                    } else {
-                        predatorLootMessage.set(lootPrompt + loot);
-                        predatorProperty.set(propertyPrompt + population.getPredatorPopulation());
-                    }
-                });
-                try {
-                    sleep(PAUSE);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                monsterFisherPredation(preyIsVictim, CP, takenBefore, i, ispb, propertyPrompt);
             }
             long sleepReminder = sleepBeforeMeeting(stepsPassedBefore, ispb);
-            //TODO: monster eats all the fish in fisherman's nets
-            Platform.runLater(() -> {
-                if (preyIsVictim) preyLootMessage.set(lootPrompt + 0);
-                else predatorLootMessage.set(lootPrompt + 0);
-            });
-            //TODO: takenAfter -= fishermanLoot
-            long takenAfter = sleepAfterMeeting(CP, ispb, sleepReminder);
+            //monster eats all the fishes in fisherman's nets
+            long takenAfter = sleepAfterMeeting(CP, ispb, sleepReminder) - lootCount;
+            lootCount = 0;
+            //recalculate current population
             long refreshedCP = preyIsVictim ? population.getPreyPopulation() : population.getPredatorPopulation();
             for (double i = 1.0 / (MONSTER_STEPS - ispb + 1); i <= 1.0; i += 1.0 / (MONSTER_STEPS - ispb + 1)) {
-                //recalculate current population
-                if (preyIsVictim) population.setPreyPopulation(refreshedCP - Math.round(takenAfter * i));
-                else population.setPredatorPopulation(refreshedCP - Math.round(takenAfter * i));
-                Platform.runLater(() -> {
-                    if (preyIsVictim) preyProperty.set(propertyPrompt + population.getPreyPopulation());
-                    else predatorProperty.set(propertyPrompt + population.getPredatorPopulation());
-                });
-                try {
-                    sleep(PAUSE);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                monsterFisherPredation(preyIsVictim, refreshedCP, takenAfter, i, 0, propertyPrompt);
             }
         }
 
+        private void monsterFisherPredation(boolean preyIsVictim, long CP, long taken, double i, int ispb, String propertyPrompt) {
+            if (preyIsVictim) population.setPreyPopulation(CP - Math.round(taken * i));
+            else population.setPredatorPopulation(CP - Math.round(taken * i));
+            lootCount = Math.round(CP * NET_CATCH_COEF * ispb / FISHING_STEPS * i);
+            Platform.runLater(() -> {
+                if (preyIsVictim) preyProperty.set(propertyPrompt + population.getPreyPopulation());
+                else predatorProperty.set(propertyPrompt + population.getPredatorPopulation());
+                lootMessage.set(lootPrompt + lootCount);
+            });
+            try {
+                sleep(PAUSE);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
