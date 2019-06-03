@@ -7,9 +7,11 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="275.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <Button fx:id="simulationButton" layoutX="48.0" layoutY="138.0" mnemonicParsing="false" onMouseClicked="#startSimulation" prefHeight="48.0" prefWidth="70.0" text="start" />
-      <Label fx:id="preyLabel" layoutX="48.0" layoutY="39.0" prefHeight="36.0" prefWidth="107.0" text="Prey population" />
-      <Label fx:id="predatorLabel" layoutX="182.0" layoutY="48.0" text="Predator population" />
+      <Label fx:id="preyLabel" layoutX="38.0" layoutY="76.0" prefHeight="36.0" prefWidth="107.0" text="Prey population" />
+      <Label fx:id="predatorLabel" layoutX="189.0" layoutY="84.0" prefHeight="27.0" prefWidth="107.0" text="Predator population" />
       <Button fx:id="fishingBegin" layoutX="208.0" layoutY="140.0" mnemonicParsing="false" onMouseClicked="#goFishing" prefHeight="48.0" prefWidth="70.0" text="fishing" />
       <Label fx:id="fishingIndicator" layoutX="13.0" layoutY="199.0" prefHeight="71.0" prefWidth="323.0" text="fisherman is awaiting" />
+      <Label fx:id="lootLabel" layoutX="48.0" layoutY="34.0" text="loot" />
+      <Label fx:id="moneyLabel" layoutX="229.0" layoutY="34.0" text="money" />
    </children>
 </AnchorPane>

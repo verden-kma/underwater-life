@@ -1,35 +1,14 @@
-import tempBackend.Population;
-
+import javafx.beans.binding.NumberBinding;
+import javafx.beans.property.SimpleLongProperty;
 
 public class Launcher {
 
-   // private Population instance = Population.getInstance();
-
     public static void main(String[] args) {
-        Population instance = Population.getInstance();
-        System.out.println(instance);
-        long c1 = 0;
-        long c2 = 0;
-        for (int i = 0; i <2001; i++) {
-            instance.updatePopulationCount();
-            c1 = Math.max(c1, instance.getPreyPopulation());
-            c2 = Math.max(c2, instance.getPredatorPopulation());
-           /* System.out.println("I: " + i);
-            if (instance.getPreyPopulation() > c1) {
-                c1 = instance.getPreyPopulation();
-                System.out.println("Prey Rise: " + instance.getPreyPopulation());
-            } else {
-                c1 = instance.getPreyPopulation();
-                System.out.println("Prey Fall: " + instance.getPreyPopulation());
-            }
-            if (instance.getPredatorPopulation() > c2) {
-                c2 = instance.getPredatorPopulation();
-                System.out.println("Predator Rise: " + instance.getPredatorPopulation());
-            } else {
-                c2 = instance.getPredatorPopulation();
-                System.out.println("Predator Fall: " + instance.getPredatorPopulation());
-            }*/
-        }
-        System.out.println("PreyMax: "+c1 + "\nPredMax: " + c2);
+        SimpleLongProperty a = new SimpleLongProperty(Math.round(100*0.1));
+        //a = newa.getValue()*5;
+        NumberBinding nb = a.add(5);
+        NumberBinding nbs = nb.add(8);
+        System.out.println(nbs.getValue());
+
     }
 }
