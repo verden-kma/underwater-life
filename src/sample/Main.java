@@ -12,7 +12,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("stern fisherman");
-        primaryStage.setScene(new Scene(root, 475, 280));
+        primaryStage.setScene(new Scene(root, 1000, 600));
+        primaryStage.setResizable(false);
         primaryStage.alwaysOnTopProperty();
         primaryStage.show();
     }

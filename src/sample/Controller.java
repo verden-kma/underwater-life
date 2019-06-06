@@ -8,8 +8,6 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tooltip;
@@ -24,13 +22,10 @@ import static java.lang.Thread.sleep;
 public class Controller {
 
     @FXML
-    private Text moneyCounterLabel;
+    private Text moneyLabel;
 
     @FXML
-    private Button levelButton;
-
-    @FXML
-    private Button starPlayButton;
+    private Button startGame;
 
     @FXML
     private ImageView fishermanImage;
@@ -45,20 +40,12 @@ public class Controller {
     @FXML
     Label predatorLabel;
 
-    @FXML
-    Button simulationButton;
 
     @FXML
     Button fishingBegin;
 
     @FXML
-    Label fishingIndicator;
-
-    @FXML
     Label lootLabel;
-
-    @FXML
-    Label moneyLabel;
 
     @FXML
     Button sellButton;
@@ -84,42 +71,43 @@ public class Controller {
 
     private SimpleStringProperty preyProperty = new SimpleStringProperty();
     private SimpleStringProperty predatorProperty = new SimpleStringProperty();
-    private SimpleStringProperty money = new SimpleStringProperty("500000");
-
+    private SimpleStringProperty money = new SimpleStringProperty("500");
     private SimpleStringProperty lootMessage = new SimpleStringProperty("0");
+
+    private boolean monsterFoodDigested;
+    private boolean preyFishing = true;
+    private boolean harpoonIsBought;
+    private long additionalSleepTime;
+    private PopulationUpdater pu = new PopulationUpdater();
+    private FishingImpact fimp = new FishingImpact();
+    private Monster monster = new Monster();
+    private MonsterHunt monsterHunt = new MonsterHunt();
+    private Population population = Population.getInstance();
+    private final Object populationLock = new Object();
+    private final Timer timer = new Timer(true);
+
     private final String PREY_LOOT_MESSAGE = "Small: ";
     private final String PREDATOR_LOOT_MESSAGE = "Large: ";
     private final String PREY_PROPERTY_PROMPT = "Prey: ";
     private final String PREDATOR_PROPERTY_PROMPT = "Predator: ";
     private final short PREY_PRICE = 1;
     private final short PREDATOR_PRICE = 3;
-    private final int HARPOON_PRICE = 5000;
-    private final double SUCCESS_GAP = 0.25;
+    private final int HARPOON_PRICE = 2000;
+    private final double SUCCESS_GAP = 0.55;
     private final double MONSTER_HEAL = 0.2;
     private final double HARPOON_DAMAGE = 0.3;
+    private double NET_CATCH_COEF = 0.1;
+    private final double MONSTER_EAT = 0.2;
+    private final long PAUSE = 1000;
+    private final int FISHING_STEPS = 4;
+    private final int MONSTER_STEPS = 5;
+    private final long MONSTER_INITIAL_DELAY = 0;//15 000
+    private final long PREY_MAX = population.getMaxPopulations().getV1();
+    private final long PREDATOR_MAX = population.getMaxPopulations().getV2();
 
     private long lootCount;  //might be deleted
     private String lootPrompt = ""; //lootCount and lootPrompt
 
-
-    private double NET_CATCH_COEF = 0.1;
-    private final double MONSTER_EAT = 0.2;
-    private PopulationUpdater pu = new PopulationUpdater();
-    private FishingImpact fimp = new FishingImpact();
-    private Monster monster = new Monster();
-    private MonsterHunt monsterHunt = new MonsterHunt();
-    private Population population = Population.getInstance();
-    private final long PREY_MAX = population.getMaxPopulations().getV1();
-    private final long PREDATOR_MAX = population.getMaxPopulations().getV2();
-    private final Object populationLock = new Object();
-    private final Timer timer = new Timer(true);
-    private boolean monsterFoodDigested;
-    private boolean preyFishing = true;
-    private final long PAUSE = 1000;
-    private final int FISHING_STEPS = 4;
-    private final int MONSTER_STEPS = 5;
-    private long additionalSleepTime;
-    private boolean harpoonIsBought;
 
     @FXML
     public void initialize() {
@@ -167,8 +155,8 @@ public class Controller {
         preyLabel.textProperty().bind(preyProperty);
         predatorLabel.textProperty().bind(predatorProperty);
         pu.start();
-        simulationButton.setDisable(true);
-        timer.schedule(monsterDigestion, 15000, 10000);
+        startGame.setVisible(false);
+        timer.schedule(monsterDigestion, MONSTER_INITIAL_DELAY, 10000);
         timer.schedule(rentPayment, 0, 150);
     }
 
@@ -288,8 +276,9 @@ public class Controller {
                         System.out.println("monsterInvokedByFishing updated");
                     }
                     payForFishing();
-                    if (monsterInvokedByFishing) return null;
-                    //TODO: check if it truly returns
+                    if (monsterInvokedByFishing){
+                        return null;
+                    }
                     pausePU = true;
                     synchronized (populationLock) {/*ensures population updates are paused before proceeding*/ }
                     fishing(preyFishing);
@@ -339,16 +328,17 @@ public class Controller {
                         monsterInvokedByFishing = true;
                         cancel();
                     }
+                    disableButtons();
                 }
 
                 protected void succeeded() {
                     if (!monsterInvokedByFishing) {
-                        fishingIndicator.setText("awaiting...");
                         pausePU = false;
                         synchronized (populationLock) {
                             populationLock.notifyAll();
                         }
                     }
+                    enableButtons();
                 }
 
                 protected void failed() {
@@ -391,7 +381,6 @@ public class Controller {
 
                 private void monsterPredation(boolean preyEating) {
                     long CP = preyEating ? population.getPreyPopulation() : population.getPredatorPopulation();
-                    //TODO: testing
                     int healStep = 0;
                     double currentHealth = monsterHealth.getProgress();
                     for (double i = MONSTER_EAT / MONSTER_STEPS; i <= MONSTER_EAT; i += MONSTER_EAT / MONSTER_STEPS) {
@@ -415,10 +404,12 @@ public class Controller {
                 @Override
                 protected void running() {
                     pausePU = true;
+                    disableButtons();
                 }
 
                 @Override
                 protected void succeeded() {
+                    enableButtons();
                     additionalSleepTime += MONSTER_STEPS * PAUSE;
                     monsterFoodDigested = false;
                     pausePU = false;
@@ -468,10 +459,8 @@ public class Controller {
             long sleepReminder = sleepBeforeMeeting(stepsPassedBefore, ispb);
             //monster eats all the fishes in fisherman's nets
             lootCount = 0;
-            Platform.runLater(() -> lootLabel.setText(lootPrompt + lootCount));
+            Platform.runLater(() -> lootMessage.set(lootPrompt + lootCount));
             long takenAfter = sleepAfterMeeting(CP, ispb, sleepReminder) - lootCount;
-
-            //TODO: experiment
             monsterHealth.setProgress(currentHealth * 1.05);
 //            recalculate current population
             long refreshedCP = preyIsVictim ? population.getPreyPopulation() : population.getPredatorPopulation();
@@ -555,7 +544,7 @@ public class Controller {
                 return;
             }
             pausePU = true;
-            harpoonButton.setDisable(true);
+            disableButtons();
         }
 
         protected void succeeded() {
@@ -566,6 +555,7 @@ public class Controller {
             synchronized (populationLock) {
                 populationLock.notifyAll();
             }
+            enableButtons();
         }
 
         protected void cancelled(){
@@ -575,11 +565,26 @@ public class Controller {
             synchronized (populationLock) {
                 populationLock.notifyAll();
             }
+            enableButtons();
         }
 
         protected void failed() {
             System.out.println("Monster hunting failed!");
         }
+    }
+
+    private void disableButtons(){
+        fishingBegin.setDisable(true);
+        predatorFishing.setDisable(true);
+        harpoonButton.setDisable(true);
+        sellButton.setDisable(true);
+    }
+
+    private void enableButtons(){
+        fishingBegin.setDisable(false);
+        predatorFishing.setDisable(false);
+        harpoonButton.setDisable(false);
+        sellButton.setDisable(false);
     }
 
 }
