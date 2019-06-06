@@ -2,9 +2,11 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="275.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="475.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <Button fx:id="simulationButton" layoutX="34.0" layoutY="138.0" mnemonicParsing="false" onMouseClicked="#startSimulation" prefHeight="48.0" prefWidth="70.0" text="start" />
       <Label fx:id="preyLabel" layoutX="38.0" layoutY="76.0" prefHeight="36.0" prefWidth="107.0" text="Prey population" />
@@ -14,5 +16,12 @@
       <Label fx:id="lootLabel" layoutX="48.0" layoutY="34.0" text="loot" />
       <Label fx:id="moneyLabel" layoutX="229.0" layoutY="34.0" text="money" />
       <Button fx:id="sellButton" layoutX="248.0" layoutY="140.0" mnemonicParsing="false" onMouseClicked="#sellFish" prefHeight="48.0" prefWidth="78.0" text="sell" />
+      <Button fx:id="predatorFishing" layoutX="353.0" layoutY="141.0" mnemonicParsing="false" onMouseClicked="#fishingForPredator" prefHeight="48.0" prefWidth="87.0" text="predator&#10;fishing" textAlignment="CENTER" />
+      <Button fx:id="harpoonButton" layoutX="364.0" layoutY="22.0" mnemonicParsing="false" onMouseClicked="#harpoonAction" prefHeight="48.0" prefWidth="78.0" text="buy &#10;harpoon" textAlignment="CENTER">
+         <tooltip>
+            <Tooltip fx:id="harpoonTooltip" text="price" />
+         </tooltip>
+      </Button>
+      <ProgressBar fx:id="monsterHealth" layoutX="323.0" layoutY="225.0" prefHeight="18.0" prefWidth="141.0" progress="0.35" style="-fx-background-color: #BB5762;" />
    </children>
 </AnchorPane>
