@@ -62,6 +62,12 @@ public class Controller {
     @FXML
     ProgressBar monsterHealth;
 
+    @FXML
+    Button upgradeButton;
+
+    @FXML
+    Tooltip upgradeTooltip;
+
     private volatile boolean pausePU;
     private volatile boolean preyPeak;
     private volatile boolean predPeak;
@@ -71,7 +77,7 @@ public class Controller {
 
     private SimpleStringProperty preyProperty = new SimpleStringProperty();
     private SimpleStringProperty predatorProperty = new SimpleStringProperty();
-    private SimpleStringProperty money = new SimpleStringProperty("500");
+    private SimpleStringProperty money = new SimpleStringProperty("5000");
     private SimpleStringProperty lootMessage = new SimpleStringProperty("0");
 
     private boolean monsterFoodDigested;
@@ -93,7 +99,9 @@ public class Controller {
     private final short PREY_PRICE = 1;
     private final short PREDATOR_PRICE = 3;
     private final int HARPOON_PRICE = 2000;
-    private final double SUCCESS_GAP = 0.55;
+    private final int UPGRADE_PRICE = 1500;
+    //minimum % of victim's population that is necessary for profitable fishing
+    private final double SUCCESS_GAP = 0.51;
     private final double MONSTER_HEAL = 0.2;
     private final double HARPOON_DAMAGE = 0.3;
     private double NET_CATCH_COEF = 0.1;
@@ -101,7 +109,7 @@ public class Controller {
     private final long PAUSE = 1000;
     private final int FISHING_STEPS = 4;
     private final int MONSTER_STEPS = 5;
-    private final long MONSTER_INITIAL_DELAY = 0;//15 000
+    private final long MONSTER_INITIAL_DELAY = 0;//should be 15 000
     private final long PREY_MAX = population.getMaxPopulations().getV1();
     private final long PREDATOR_MAX = population.getMaxPopulations().getV2();
 
@@ -114,6 +122,7 @@ public class Controller {
         moneyLabel.textProperty().bind(money);
         lootLabel.textProperty().bind(lootMessage);
         harpoonTooltip.setText(valueOf(HARPOON_PRICE));
+        upgradeTooltip.setText(valueOf(UPGRADE_PRICE));
     }
 
     private TimerTask rentPayment = new TimerTask() {
@@ -176,6 +185,15 @@ public class Controller {
         short pricePerFish = preyFishing ? PREY_PRICE : PREDATOR_PRICE;
         money.set(valueOf(Integer.parseInt(money.getValue()) + lootCount * pricePerFish));
         lootMessage.set("0");
+    }
+
+
+    @FXML
+    public void upgradeFisherman(){
+        money.set(valueOf(Integer.parseInt(money.get())-UPGRADE_PRICE));
+        NET_CATCH_COEF = NET_CATCH_COEF*1.5;
+        upgradeButton.setVisible(false);
+        //TODO: change fisherman's skin
     }
 
     @FXML
@@ -289,7 +307,7 @@ public class Controller {
                 }
 
                 private void payForFishing() {
-                    int fee = (int) (preyFishing ? PREY_MAX * SUCCESS_GAP * PREY_PRICE * NET_CATCH_COEF : PREDATOR_MAX * SUCCESS_GAP * PREY_PRICE * NET_CATCH_COEF);
+                    int fee = (int) (preyFishing ? PREY_MAX * SUCCESS_GAP * PREY_PRICE * NET_CATCH_COEF : PREDATOR_MAX * SUCCESS_GAP * PREDATOR_PRICE * NET_CATCH_COEF);
                     int newValue = Integer.parseInt(money.get()) - fee;
                     Platform.runLater(() -> money.set(valueOf(newValue)));
                 }

@@ -66,7 +66,7 @@
                         <Image url="@animation/transparent-coin-game.png" />
                      </image>
                   </ImageView>
-                  <Text fx:id="moneyLabel" layoutX="58.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="115.99999999999977">
+                  <Text fx:id="moneyLabel" layoutX="58.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="RIGHT" wrappingWidth="115.99999999999977">
                      <font>
                         <Font size="27.0" />
                      </font>
@@ -116,6 +116,11 @@
             <Button fx:id="predatorFishing" layoutX="431.0" layoutY="85.0" mnemonicParsing="false" onMouseClicked="#fishingForPredator" prefHeight="48.0" prefWidth="87.0" text="predator&#10;fishing" textAlignment="CENTER" />
             <Button fx:id="sellButton" layoutX="877.0" layoutY="95.0" mnemonicParsing="false" onMouseClicked="#sellFish" prefHeight="48.0" prefWidth="78.0" text="sell fish" />
             <ProgressBar fx:id="monsterHealth" layoutX="187.0" layoutY="136.0" prefHeight="18.0" prefWidth="141.0" progress="0.35" style="-fx-background-color: #BB5762;" />
+            <Button fx:id="upgradeButton" layoutX="391.0" layoutY="23.0" mnemonicParsing="false" onMouseClicked="#upgradeFisherman" text="Upgrade">
+               <tooltip>
+                  <Tooltip fx:id="upgradeTooltip" text="Empty Tooltip" />
+               </tooltip>
+            </Button>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="-14.0" layoutY="250.0" prefHeight="150.0" prefWidth="1015.0" style="-fx-background-color: #99CCFF;" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">

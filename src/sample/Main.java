@@ -4,18 +4,42 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+    static Stage stage;
+    private static Scene mainScene;
+    private static FXMLLoader loader;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        /*Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("stern fisherman");
         primaryStage.setScene(new Scene(root, 1000, 600));
         primaryStage.setResizable(false);
         primaryStage.alwaysOnTopProperty();
+        primaryStage.show();*/
+        stage = primaryStage;
+        Parent root = FXMLLoader.load(getClass().getResource("initialScene.fxml"));
+        root.setStyle("-fx-background-image: url('" + "/sample/animation/intro.jpg" + "'); " +
+                "-fx-background-position: center center; " +
+                "-fx-background-repeat: stretch;" +
+                "-fx-background-size: 100% 100%");
+        primaryStage.setTitle("starter");
+        primaryStage.setScene(new Scene(root, 800, 400));
+        primaryStage.setResizable(false);
+        primaryStage.alwaysOnTopProperty();
         primaryStage.show();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("sample.fxml"));
+        this.loader = loader;
+        mainScene = new Scene(loader.load(), 1000, 600);
+    }
+
+    static void changeScene() {
+        stage.setScene(mainScene);
+        ((Controller) loader.getController()).startSimulation();
     }
 
 
