@@ -34,7 +34,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("sample.fxml"));
         this.loader = loader;
-        mainScene = new Scene(loader.load(), 1000, 600);
+        mainScene = new Scene(loader.load(), 1000, 650);
     }
 
     static void changeScene() {

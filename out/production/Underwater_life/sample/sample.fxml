@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.effect.Blend?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -16,12 +17,12 @@
    <children>
       <AnchorPane prefHeight="188.0" prefWidth="600.0" style="-fx-background-color: #00FFFF;" AnchorPane.bottomAnchor="390.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fitHeight="50.0" fitWidth="76.0" layoutX="27.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="83.0">
+            <ImageView fitHeight="68.0" fitWidth="107.0" layoutX="11.0" layoutY="152.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="887.317756652832" AnchorPane.topAnchor="152.0">
                <image>
                   <Image url="@animation/cloud.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="50.0" fitWidth="75.0" layoutX="214.0" layoutY="183.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="68.0" fitWidth="102.0" layoutX="207.0" layoutY="152.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@animation/cloud.png" />
                </image>
@@ -29,27 +30,27 @@
                   <Rectangle2D />
                </viewport>
             </ImageView>
-            <ImageView fitHeight="50.0" fitWidth="75.0" layoutX="177.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="213.766357421875" AnchorPane.topAnchor="10.0">
+            <ImageView fitHeight="80.0" fitWidth="102.0" layoutX="156.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="156.0" AnchorPane.topAnchor="12.0">
                <image>
                   <Image url="@animation/cloud.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="50.0" fitWidth="64.0" layoutX="454.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="96.0" fitWidth="133.0" layoutX="391.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@animation/cloud.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="50.0" fitWidth="75.0" layoutX="559.0" layoutY="133.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="113.0" fitWidth="133.0" layoutX="532.0" layoutY="126.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@animation/cloud.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="100.0" fitWidth="102.0" layoutX="289.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="103.0" fitWidth="102.0" layoutX="289.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@animation/SUN.gif" />
                </image>
             </ImageView>
-            <ImageView fitHeight="50.0" fitWidth="75.0" layoutX="269.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="57.0" fitWidth="78.0" layoutX="266.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@animation/cloud.png" />
                </image>
@@ -88,40 +89,57 @@
                   <Image url="@animation/cloud.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="50.0" fitWidth="75.0" layoutX="730.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="142.0" AnchorPane.rightAnchor="195.0">
+            <ImageView fitHeight="89.0" fitWidth="141.0" layoutX="716.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="116.0" AnchorPane.rightAnchor="120.0">
                <image>
                   <Image url="@animation/cloud.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="50.0" fitWidth="75.0" layoutX="888.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="30.0">
+            <ImageView fitHeight="68.0" fitWidth="107.0" layoutX="888.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="30.0">
                <image>
                   <Image url="@animation/cloud.png" />
                </image>
             </ImageView>
-            <Button fx:id="startGame" layoutX="859.0" layoutY="8.0" mnemonicParsing="false" onMouseClicked="#startSimulation" prefHeight="43.0" prefWidth="133.0" style="-fx-background-color: #ffff99; -fx-border-color: #663300; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 2;" text="start fishing">
+            <Label fx:id="preyLabel" layoutX="11.0" layoutY="46.0" prefHeight="36.0" prefWidth="107.0" text="Prey population">
+               <font>
+                  <Font name="Arial Black" size="12.0" />
+               </font></Label>
+            <Label fx:id="predatorLabel" layoutX="11.0" layoutY="82.0" prefHeight="27.0" prefWidth="133.0" text="Predator population">
+               <font>
+                  <Font name="Arial Black" size="12.0" />
+               </font></Label>
+            <Label fx:id="lootLabel" layoutX="11.0" layoutY="112.0" text="loot" />
+            <Button fx:id="harpoonButton" layoutX="774.0" layoutY="75.0" mnemonicParsing="false" onMouseClicked="#harpoonAction" prefHeight="48.0" prefWidth="78.0" style="-fx-background-color: #ffffff;" text="buy &#10;harpoon" textAlignment="CENTER">
+               <tooltip>
+                  <Tooltip fx:id="harpoonTooltip" text="price" />
+               </tooltip>
                <font>
                   <Font name="Arial Black" size="12.0" />
                </font>
             </Button>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-14.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="preyLabel" layoutX="23.0" layoutY="46.0" prefHeight="36.0" prefWidth="107.0" text="Prey population" />
-            <Label fx:id="predatorLabel" layoutX="23.0" layoutY="144.0" prefHeight="27.0" prefWidth="107.0" text="Predator population" />
-            <Label fx:id="lootLabel" layoutX="177.0" layoutY="80.0" text="loot" />
-            <Button fx:id="harpoonButton" layoutX="702.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#harpoonAction" prefHeight="48.0" prefWidth="78.0" text="buy &#10;harpoon" textAlignment="CENTER">
-               <tooltip>
-                  <Tooltip fx:id="harpoonTooltip" text="price" />
-               </tooltip>
-            </Button>
-            <Button fx:id="fishingBegin" layoutX="558.0" layoutY="11.0" mnemonicParsing="false" onMouseClicked="#goFishing" prefHeight="48.0" prefWidth="70.0" text="prey&#10;fishing" textAlignment="CENTER" />
-            <Button fx:id="predatorFishing" layoutX="431.0" layoutY="85.0" mnemonicParsing="false" onMouseClicked="#fishingForPredator" prefHeight="48.0" prefWidth="87.0" text="predator&#10;fishing" textAlignment="CENTER" />
-            <Button fx:id="sellButton" layoutX="877.0" layoutY="95.0" mnemonicParsing="false" onMouseClicked="#sellFish" prefHeight="48.0" prefWidth="78.0" text="sell fish" />
-            <ProgressBar fx:id="monsterHealth" layoutX="187.0" layoutY="136.0" prefHeight="18.0" prefWidth="141.0" progress="0.35" style="-fx-background-color: #BB5762;" />
-            <Button fx:id="upgradeButton" layoutX="391.0" layoutY="23.0" mnemonicParsing="false" onMouseClicked="#upgradeFisherman" text="Upgrade">
+            <Button fx:id="fishingBegin" layoutX="430.0" layoutY="47.0" mnemonicParsing="false" onMouseClicked="#goFishing" prefHeight="48.0" prefWidth="70.0" style="-fx-background-color: #ffffff;" text="prey&#10;fishing" textAlignment="CENTER">
+               <font>
+                  <Font name="Arial Black" size="12.0" />
+               </font></Button>
+            <Button fx:id="predatorFishing" layoutX="566.0" layoutY="147.0" mnemonicParsing="false" onMouseClicked="#fishingForPredator" prefHeight="48.0" prefWidth="75.0" style="-fx-background-color: #ffffff;" text="predator&#10;fishing" textAlignment="CENTER">
+               <font>
+                  <Font name="Arial Black" size="12.0" />
+               </font>
+               <effect>
+                  <Blend />
+               </effect></Button>
+            <ProgressBar fx:id="monsterHealth" layoutX="11.0" layoutY="133.0" prefHeight="18.0" prefWidth="141.0" progress="0.35" style="-fx-background-color: #BB5762;" />
+            <Button fx:id="upgradeButton" layoutX="226.0" layoutY="173.0" mnemonicParsing="false" onMouseClicked="#upgradeFisherman" style="-fx-background-color: #ffffff;" text="Upgrade">
                <tooltip>
                   <Tooltip fx:id="upgradeTooltip" text="Empty Tooltip" />
                </tooltip>
+               <font>
+                  <Font name="Arial Black" size="12.0" />
+               </font>
             </Button>
          </children>
+         <effect>
+            <Blend />
+         </effect>
       </AnchorPane>
       <AnchorPane layoutX="-14.0" layoutY="250.0" prefHeight="150.0" prefWidth="1015.0" style="-fx-background-color: #99CCFF;" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
@@ -202,6 +220,15 @@
                   <Image url="@animation/66e1.png" />
                </image>
             </ImageView>
+            <ImageView fx:id="fishermanImageSecond" fitHeight="150.0" fitWidth="200.0" layoutX="698.0" layoutY="-60.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@animation/123.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="sellButton" layoutX="917.0" layoutY="-59.0" mnemonicParsing="false" onMouseClicked="#sellFish" prefHeight="48.0" prefWidth="78.0" style="-fx-background-color: #ffff99; -fx-border-color: #000000; -fx-background-radius: 10; -fx-border-width: 2; -fx-border-radius: 10;" text="sell fish">
+               <font>
+                  <Font name="Arial Black" size="12.0" />
+               </font></Button>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="104.0" layoutY="389.0" prefHeight="130.0" prefWidth="1000.0" style="-fx-background-color: #0000CC;" AnchorPane.bottomAnchor="130.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
@@ -290,7 +317,7 @@
                   <Image url="@animation/darkwater.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="monsterImage" fitHeight="150.0" fitWidth="200.0" layoutX="525.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="monsterImage" fitHeight="150.0" fitWidth="200.0" layoutX="439.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@animation/tumblr_n8duq23Qot1tv7h35o1_1280.png" />
                </image>

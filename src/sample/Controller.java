@@ -1,6 +1,7 @@
 package sample;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
@@ -66,6 +67,9 @@ public class Controller {
     Button upgradeButton;
 
     @FXML
+    private ImageView fishermanImageSecond;
+
+    @FXML
     Tooltip upgradeTooltip;
 
     private volatile boolean pausePU;
@@ -119,6 +123,7 @@ public class Controller {
 
     @FXML
     public void initialize() {
+        fishermanImageSecond.setVisible(false);
         moneyLabel.textProperty().bind(money);
         lootLabel.textProperty().bind(lootMessage);
         harpoonTooltip.setText(valueOf(HARPOON_PRICE));
@@ -164,7 +169,7 @@ public class Controller {
         preyLabel.textProperty().bind(preyProperty);
         predatorLabel.textProperty().bind(predatorProperty);
         pu.start();
-        startGame.setVisible(false);
+        //startGame.setVisible(false);
         timer.schedule(monsterDigestion, MONSTER_INITIAL_DELAY, 10000);
         timer.schedule(rentPayment, 0, 150);
     }
@@ -193,6 +198,8 @@ public class Controller {
         money.set(valueOf(Integer.parseInt(money.get())-UPGRADE_PRICE));
         NET_CATCH_COEF = NET_CATCH_COEF*1.5;
         upgradeButton.setVisible(false);
+        fishermanImage.setVisible(false);
+        fishermanImageSecond.setVisible(true);
         //TODO: change fisherman's skin
     }
 
