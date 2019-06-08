@@ -1,5 +1,7 @@
 package sample;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,6 +14,9 @@ import javafx.concurrent.Task;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tooltip;
+import javafx.scene.transform.Scale;
+import javafx.stage.Screen;
+import javafx.util.Duration;
 import tempBackend.Population;
 
 import java.util.Timer;
@@ -67,6 +72,12 @@ public class Controller {
     Button upgradeButton;
 
     @FXML
+    private ImageView youWinImage;
+
+    @FXML
+    private ImageView gameOverImage;
+
+    @FXML
     private ImageView fishermanImageSecond;
 
     @FXML
@@ -116,7 +127,7 @@ public class Controller {
     private final long MONSTER_INITIAL_DELAY = 0;//should be 15 000
     private final long PREY_MAX = population.getMaxPopulations().getV1();
     private final long PREDATOR_MAX = population.getMaxPopulations().getV2();
-
+   private TranslateTransition tt;
     private long lootCount;  //might be deleted
     private String lootPrompt = ""; //lootCount and lootPrompt
 
@@ -143,6 +154,7 @@ public class Controller {
             }
             int newValue = Integer.parseInt(money.get()) - 1;
             if (newValue < 0) {
+                gameOverImage.setVisible(true);
                 System.out.println("You Lose!");
                 gameOver = true;
                 cancel();
@@ -166,6 +178,7 @@ public class Controller {
 
     @FXML
     public void startSimulation() {
+        monsterImage.setVisible(false);
         preyLabel.textProperty().bind(preyProperty);
         predatorLabel.textProperty().bind(predatorProperty);
         pu.start();
@@ -176,11 +189,28 @@ public class Controller {
 
     @FXML
     public void goFishing() {
+movingMen();
         preyFishing = true;
         fimp.restart();
     }
+    @FXML
+    public void movingMen() {
+        ImageView fisher;
+        if(fishermanImage.isVisible())
+fisher=fishermanImage;
+        else
+            fisher=fishermanImageSecond;
+       tt= new TranslateTransition(Duration.seconds(2.5),fisher);
+       tt.setFromX(0f);
+        tt.setByX(-730f);
+        tt.setCycleCount(2);
+        tt.setAutoReverse(true);
+        tt.playFromStart();
+
+    }
 
     public void fishingForPredator() {
+        movingMen();
         preyFishing = false;
         fimp.restart();
     }
@@ -283,10 +313,24 @@ public class Controller {
         }
 
         private void wakeMonster() {
+
+moveMonster();
+//monsterImage.setVisible(false);
             autoNotification = true;
             pausePU = true;
             Platform.runLater(() -> monster.restart());
         }
+    }
+    private void moveMonster(){
+        monsterImage.setVisible(true);
+        tt= new TranslateTransition(Duration.seconds(3),monsterImage);
+        tt.setFromX(0f);
+        tt.setByX(960f);
+        tt.setCycleCount(2);
+        tt.setAutoReverse(true);
+        tt.playFromStart();
+       // monsterImage.setVisible(false);
+
     }
 
     private class FishingImpact extends Service<Void> {
@@ -555,6 +599,7 @@ public class Controller {
                         e.printStackTrace();
                     }
                     if (monsterHealth.getProgress() == 0){
+                        youWinImage.setVisible(true);
                         System.out.println("You win!");
                         gameOver = true;
                     }

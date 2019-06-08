@@ -4,10 +4,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.InitialController">
+<AnchorPane prefHeight="490.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.InitialController">
    <children>
-      <Button layoutX="365.0" layoutY="272.0" mnemonicParsing="false" onMouseClicked="#launchGame" prefHeight="37.0" prefWidth="82.0" style="-fx-background-color: #000000; -fx-background-radius: 20;" text="start" textFill="WHITE">
+      <Button layoutX="309.0" layoutY="273.0" mnemonicParsing="false" onMouseClicked="#launchGame" prefHeight="37.0" prefWidth="82.0" style="-fx-background-color: #000000; -fx-background-radius: 20;" text="start" textFill="WHITE">
          <font>
             <Font name="Arial" size="20.0" />
          </font>

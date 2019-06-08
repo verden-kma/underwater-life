@@ -22,19 +22,19 @@ public class Main extends Application {
         primaryStage.show();*/
         stage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("initialScene.fxml"));
-        root.setStyle("-fx-background-image: url('" + "/sample/animation/intro.jpg" + "'); " +
+        root.setStyle("-fx-background-image: url('" + "/sample/animation/456.jpg" + "'); " +
                 "-fx-background-position: center center; " +
                 "-fx-background-repeat: stretch;" +
                 "-fx-background-size: 100% 100%");
         primaryStage.setTitle("starter");
-        primaryStage.setScene(new Scene(root, 800, 400));
+        primaryStage.setScene(new Scene(root, 700, 490));
         primaryStage.setResizable(false);
         primaryStage.alwaysOnTopProperty();
         primaryStage.show();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("sample.fxml"));
         this.loader = loader;
-        mainScene = new Scene(loader.load(), 1000, 650);
+        mainScene = new Scene(loader.load(), 1000, 700);
     }
 
     static void changeScene() {
