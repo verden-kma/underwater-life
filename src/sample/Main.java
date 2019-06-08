@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -14,12 +13,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        /*Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("stern fisherman");
-        primaryStage.setScene(new Scene(root, 1000, 600));
-        primaryStage.setResizable(false);
-        primaryStage.alwaysOnTopProperty();
-        primaryStage.show();*/
         stage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("initialScene.fxml"));
         root.setStyle("-fx-background-image: url('" + "/sample/animation/456.jpg" + "'); " +

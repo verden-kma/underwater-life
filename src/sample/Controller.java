@@ -1,9 +1,7 @@
 package sample;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
@@ -14,8 +12,6 @@ import javafx.concurrent.Task;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Tooltip;
-import javafx.scene.transform.Scale;
-import javafx.stage.Screen;
 import javafx.util.Duration;
 import tempBackend.Population;
 
@@ -29,9 +25,6 @@ public class Controller {
 
     @FXML
     private Text moneyLabel;
-
-    @FXML
-    private Button startGame;
 
     @FXML
     private ImageView fishermanImage;
@@ -119,7 +112,11 @@ public class Controller {
     private final double SUCCESS_GAP = 0.51;
     private final double MONSTER_HEAL = 0.2;
     private final double HARPOON_DAMAGE = 0.3;
-    private double NET_CATCH_COEF = 0.1;
+    //affects fee
+    private final double NET_CATCH_DEFAULT = 0.1;
+    private final double ENHANCED_NET_CATCH = 0.12;
+    //affects amount of loot
+    private double currentNet = NET_CATCH_DEFAULT;
     private final double MONSTER_EAT = 0.2;
     private final long PAUSE = 1000;
     private final int FISHING_STEPS = 4;
@@ -127,7 +124,9 @@ public class Controller {
     private final long MONSTER_INITIAL_DELAY = 0;//should be 15 000
     private final long PREY_MAX = population.getMaxPopulations().getV1();
     private final long PREDATOR_MAX = population.getMaxPopulations().getV2();
-   private TranslateTransition tt;
+    //money that gamer pays for attacking the monster
+    private final int HUNTING_COST = 75;
+    private TranslateTransition tt;
     private long lootCount;  //might be deleted
     private String lootPrompt = ""; //lootCount and lootPrompt
 
@@ -182,7 +181,6 @@ public class Controller {
         preyLabel.textProperty().bind(preyProperty);
         predatorLabel.textProperty().bind(predatorProperty);
         pu.start();
-        //startGame.setVisible(false);
         timer.schedule(monsterDigestion, MONSTER_INITIAL_DELAY, 10000);
         timer.schedule(rentPayment, 0, 150);
     }
@@ -226,7 +224,7 @@ fisher=fishermanImage;
     @FXML
     public void upgradeFisherman(){
         money.set(valueOf(Integer.parseInt(money.get())-UPGRADE_PRICE));
-        NET_CATCH_COEF = NET_CATCH_COEF*1.5;
+        currentNet = ENHANCED_NET_CATCH;
         upgradeButton.setVisible(false);
         fishermanImage.setVisible(false);
         fishermanImageSecond.setVisible(true);
@@ -358,7 +356,7 @@ moveMonster();
                 }
 
                 private void payForFishing() {
-                    int fee = (int) (preyFishing ? PREY_MAX * SUCCESS_GAP * PREY_PRICE * NET_CATCH_COEF : PREDATOR_MAX * SUCCESS_GAP * PREDATOR_PRICE * NET_CATCH_COEF);
+                    int fee = (int) (preyFishing ? PREY_MAX * SUCCESS_GAP * PREY_PRICE * NET_CATCH_DEFAULT : PREDATOR_MAX * SUCCESS_GAP * PREDATOR_PRICE * NET_CATCH_DEFAULT);
                     int newValue = Integer.parseInt(money.get()) - fee;
                     Platform.runLater(() -> money.set(valueOf(newValue)));
                 }
@@ -372,7 +370,7 @@ moveMonster();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    for (double i = NET_CATCH_COEF / FISHING_STEPS; i <= NET_CATCH_COEF; i += NET_CATCH_COEF / FISHING_STEPS) {
+                    for (double i = currentNet / FISHING_STEPS; i <= currentNet; i += currentNet / FISHING_STEPS) {
                         lootCount = Math.round(CP * i);
                         population.setPreyPopulation(Math.round(CP - lootCount));
                         Platform.runLater(() -> {
@@ -438,11 +436,6 @@ moveMonster();
                             return null;
                         }
                         monsterPredation(false);
-                    }
-                    try {//TODO: delete this sleep when the game is ready
-                        sleep(2 * PAUSE);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
                     }
                     if (autoNotification) autoNotification = false;
                     return null;
@@ -516,7 +509,7 @@ moveMonster();
             double stepsPassedBefore = 1.0 / (1.0 / MONSTER_STEPS + 2.0 / FISHING_STEPS);
             int ispb = (int) stepsPassedBefore;
             int stepCounter = 0;
-            long takenBefore = Math.round(CP * MONSTER_EAT * ispb / MONSTER_STEPS + CP * NET_CATCH_COEF * ispb / FISHING_STEPS);
+            long takenBefore = Math.round(CP * MONSTER_EAT * ispb / MONSTER_STEPS + CP * currentNet * ispb / FISHING_STEPS);
             for (double i = 1.0 / ispb; i <= ispb; i += 1.0 / ispb) {
                 try {
                     sleep(PAUSE);
@@ -543,7 +536,7 @@ moveMonster();
     private void monsterFisherPredation(boolean preyIsVictim, long CP, long taken, double i, int ispb, String propertyPrompt, int stepCount, double health) {
         if (preyIsVictim) population.setPreyPopulation(CP - Math.round(taken * i));
         else population.setPredatorPopulation(CP - Math.round(taken * i));
-        lootCount = Math.round(CP * NET_CATCH_COEF * ispb / FISHING_STEPS * i);
+        lootCount = Math.round(CP * currentNet * ispb / FISHING_STEPS * i);
         monsterHealth.setProgress(health + MONSTER_HEAL / MONSTER_STEPS * stepCount);
         System.out.println("MonsterFisher: " + monsterHealth.getProgress());
         Platform.runLater(() -> {
@@ -609,6 +602,7 @@ moveMonster();
         }
 
         public void running() {
+            money.set(valueOf(Integer.parseInt(money.getValue())-HUNTING_COST));
             if (!preyPeak) {
                 monsterHunt.cancel();
                 return;

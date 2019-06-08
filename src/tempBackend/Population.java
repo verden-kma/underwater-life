@@ -1,6 +1,5 @@
 package tempBackend;
 
-
 public class Population {
 
     //we only have and work with one instance of this class because we have only one lake/river
