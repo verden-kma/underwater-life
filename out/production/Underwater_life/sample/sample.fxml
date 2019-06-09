@@ -17,6 +17,20 @@
    <children>
       <AnchorPane prefHeight="445.0" prefWidth="1000.0" style="-fx-background-color: #00FFFF;" AnchorPane.bottomAnchor="342.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
+            <AnchorPane layoutX="-1.0" layoutY="1.0" prefHeight="50.0" prefWidth="194.0" style="-fx-background-color: #ffff99; -fx-background-radius: 10; -fx-border-color: #663300; -fx-border-radius: 10; -fx-border-width: 2;">
+               <children>
+                  <ImageView fitHeight="43.0" fitWidth="33.0" layoutX="4.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@animation/transparent-coin-game.png" />
+                     </image>
+                  </ImageView>
+                  <Text fx:id="moneyLabel" layoutX="58.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="RIGHT" wrappingWidth="115.99999999999977">
+                     <font>
+                        <Font size="27.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
             <ImageView fitHeight="68.0" fitWidth="107.0" layoutX="14.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="884.317756652832" AnchorPane.topAnchor="279.0">
                <image>
                   <Image url="@animation/cloud.png" />
@@ -55,20 +69,6 @@
                   <Image url="@animation/11609718.gif" />
                </image>
             </ImageView>
-            <AnchorPane layoutX="-1.0" layoutY="1.0" prefHeight="50.0" prefWidth="194.0" style="-fx-background-color: #ffff99; -fx-background-radius: 10; -fx-border-color: #663300; -fx-border-radius: 10; -fx-border-width: 2;">
-               <children>
-                  <ImageView fitHeight="43.0" fitWidth="33.0" layoutX="4.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@animation/transparent-coin-game.png" />
-                     </image>
-                  </ImageView>
-                  <Text fx:id="moneyLabel" layoutX="58.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="RIGHT" wrappingWidth="115.99999999999977">
-                     <font>
-                        <Font size="27.0" />
-                     </font>
-                  </Text>
-               </children>
-            </AnchorPane>
             <ImageView fitHeight="50.0" fitWidth="75.0" layoutX="720.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="170.0">
                <image>
                   <Image url="@animation/cloud.png" />
@@ -137,11 +137,6 @@
                   <Image url="@animation/ChristmasAndNewYear_NewYearNewYou-512.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="gameOverImage" fitHeight="752.0" fitWidth="1000.0" layoutX="1.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@animation/game-over.gif" />
-               </image>
-            </ImageView>
             <Button fx:id="harpoonButton" layoutX="774.0" layoutY="214.0" mnemonicParsing="false" onMouseClicked="#harpoonAction" prefHeight="48.0" prefWidth="75.0" style="-fx-background-color: #ffffff; -fx-border-radius: 10;" text="buy &#10;harpoon" textAlignment="CENTER">
                <tooltip>
                   <Tooltip fx:id="harpoonTooltip" text="price" />
@@ -155,7 +150,6 @@
             <Blend />
          </effect>
       </AnchorPane>
-      <Accordion />
       <AnchorPane layoutX="-14.0" layoutY="250.0" prefHeight="186.0" prefWidth="1000.0" style="-fx-background-color: #99CCFF;" AnchorPane.bottomAnchor="165.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <ImageView fitHeight="68.0" fitWidth="102.0" layoutX="511.0" layoutY="-97.0" pickOnBounds="true" preserveRatio="true">
@@ -246,8 +240,14 @@
                   <Image url="@animation/Spear_Bolt.png" />
                </image>
             </ImageView>
+            <ImageView fx:id="gameOverImage" fitHeight="560.0" fitWidth="940.0" layoutX="127.0" layoutY="-355.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@animation/game-over.gif" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
+      <Accordion />
       <AnchorPane layoutX="104.0" layoutY="389.0" prefHeight="150.0" prefWidth="1000.0" style="-fx-background-color: #0000CC;" AnchorPane.bottomAnchor="58.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <ImageView fitHeight="134.0" fitWidth="262.0" layoutY="-65.0" pickOnBounds="true" preserveRatio="true">
