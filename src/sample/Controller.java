@@ -1,4 +1,5 @@
 package sample;
+
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -76,6 +77,9 @@ public class Controller {
     @FXML
     Tooltip upgradeTooltip;
 
+    @FXML
+    Tooltip preyTooltip, predatorTooltip;
+
     private volatile boolean pausePU;
     private volatile boolean preyPeak;
     private volatile boolean predPeak;
@@ -85,7 +89,7 @@ public class Controller {
 
     private SimpleStringProperty preyProperty = new SimpleStringProperty();
     private SimpleStringProperty predatorProperty = new SimpleStringProperty();
-    private SimpleStringProperty money = new SimpleStringProperty("5000");
+    private SimpleStringProperty money = new SimpleStringProperty("50");
     private SimpleStringProperty lootMessage = new SimpleStringProperty("0");
 
     private boolean monsterFoodDigested;
@@ -97,7 +101,7 @@ public class Controller {
     private Monster monster = new Monster();
     private MonsterHunt monsterHunt = new MonsterHunt();
     private Population population = Population.getInstance();
-    private final Object populationLock = new Object();
+    private /*final*/ Object populationLock = new Object();
     private final Timer timer = new Timer(true);
 
     private final String PREY_LOOT_MESSAGE = "Small: ";
@@ -121,14 +125,16 @@ public class Controller {
     private final long PAUSE = 1000;
     private final int FISHING_STEPS = 4;
     private final int MONSTER_STEPS = 5;
-    private final long MONSTER_INITIAL_DELAY = 0;//should be 15 000
+    private final long MONSTER_INITIAL_DELAY = 0;//TODO: replace with 15 000 when the game is finished
     private final long PREY_MAX = population.getMaxPopulations().getV1();
     private final long PREDATOR_MAX = population.getMaxPopulations().getV2();
     //money that gamer pays for attacking the monster
     private final int HUNTING_COST = 75;
+    private final int PREY_FISHING_FEE = (int) (PREY_MAX * SUCCESS_GAP * PREY_PRICE * NET_CATCH_DEFAULT);
+    private final int PREDATOR_FISHING_FEE = (int) (PREDATOR_MAX * SUCCESS_GAP * PREDATOR_PRICE * NET_CATCH_DEFAULT);
     private TranslateTransition tt;
-    private long lootCount;  //might be deleted
-    private String lootPrompt = ""; //lootCount and lootPrompt
+    private long lootCount;
+    private String lootPrompt = "";
 
 
     @FXML
@@ -138,6 +144,8 @@ public class Controller {
         lootLabel.textProperty().bind(lootMessage);
         harpoonTooltip.setText(valueOf(HARPOON_PRICE));
         upgradeTooltip.setText(valueOf(UPGRADE_PRICE));
+        preyTooltip.setText(valueOf(PREY_FISHING_FEE));
+        predatorTooltip.setText(valueOf(PREDATOR_FISHING_FEE));
     }
 
     private TimerTask rentPayment = new TimerTask() {
@@ -164,7 +172,7 @@ public class Controller {
     private TimerTask monsterDigestion = new TimerTask() {
         @Override
         public void run() {
-            if(gameOver) cancel();
+            if (gameOver) cancel();
             try {
                 sleep(additionalSleepTime);
             } catch (InterruptedException e) {
@@ -187,19 +195,20 @@ public class Controller {
 
     @FXML
     public void goFishing() {
-movingMen();
+        movingMan();
         preyFishing = true;
         fimp.restart();
     }
+
     @FXML
-    public void movingMen() {
+    public void movingMan() {
         ImageView fisher;
-        if(fishermanImage.isVisible())
-fisher=fishermanImage;
+        if (fishermanImage.isVisible())
+            fisher = fishermanImage;
         else
-            fisher=fishermanImageSecond;
-       tt= new TranslateTransition(Duration.seconds(2.5),fisher);
-       tt.setFromX(0f);
+            fisher = fishermanImageSecond;
+        tt = new TranslateTransition(Duration.seconds(2.5), fisher);
+        tt.setFromX(0f);
         tt.setByX(-730f);
         tt.setCycleCount(2);
         tt.setAutoReverse(true);
@@ -208,7 +217,7 @@ fisher=fishermanImage;
     }
 
     public void fishingForPredator() {
-        movingMen();
+        movingMan();
         preyFishing = false;
         fimp.restart();
     }
@@ -222,13 +231,12 @@ fisher=fishermanImage;
 
 
     @FXML
-    public void upgradeFisherman(){
-        money.set(valueOf(Integer.parseInt(money.get())-UPGRADE_PRICE));
+    private void upgradeFisherman() {
+        money.set(valueOf(Integer.parseInt(money.get()) - UPGRADE_PRICE));
         currentNet = ENHANCED_NET_CATCH;
         upgradeButton.setVisible(false);
         fishermanImage.setVisible(false);
         fishermanImageSecond.setVisible(true);
-        //TODO: change fisherman's skin
     }
 
     @FXML
@@ -312,22 +320,23 @@ fisher=fishermanImage;
 
         private void wakeMonster() {
 
-moveMonster();
+            moveMonster();
 //monsterImage.setVisible(false);
             autoNotification = true;
             pausePU = true;
             Platform.runLater(() -> monster.restart());
         }
     }
-    private void moveMonster(){
+
+    private void moveMonster() {
         monsterImage.setVisible(true);
-        tt= new TranslateTransition(Duration.seconds(3),monsterImage);
+        tt = new TranslateTransition(Duration.seconds(3), monsterImage);
         tt.setFromX(0f);
         tt.setByX(960f);
         tt.setCycleCount(2);
         tt.setAutoReverse(true);
         tt.playFromStart();
-       // monsterImage.setVisible(false);
+        // monsterImage.setVisible(false);
 
     }
 
@@ -343,7 +352,7 @@ moveMonster();
                         System.out.println("monsterInvokedByFishing updated");
                     }
                     payForFishing();
-                    if (monsterInvokedByFishing){
+                    if (monsterInvokedByFishing) {
                         return null;
                     }
                     pausePU = true;
@@ -356,7 +365,7 @@ moveMonster();
                 }
 
                 private void payForFishing() {
-                    int fee = (int) (preyFishing ? PREY_MAX * SUCCESS_GAP * PREY_PRICE * NET_CATCH_DEFAULT : PREDATOR_MAX * SUCCESS_GAP * PREDATOR_PRICE * NET_CATCH_DEFAULT);
+                    int fee = (preyFishing ? PREY_FISHING_FEE : PREDATOR_FISHING_FEE);
                     int newValue = Integer.parseInt(money.get()) - fee;
                     Platform.runLater(() -> money.set(valueOf(newValue)));
                 }
@@ -585,13 +594,13 @@ moveMonster();
                     }
                     sleepBeforeMeeting(stepsPassedBefore, ispb);
                     System.out.println("Harpoon!");
-                    Platform.runLater(() -> monsterHealth.setProgress(Math.max(0, monsterHealth.getProgress()-HARPOON_DAMAGE)));
+                    Platform.runLater(() -> monsterHealth.setProgress(Math.max(0, monsterHealth.getProgress() - HARPOON_DAMAGE)));
                     try {//let runLater code to execute
                         sleep(10);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    if (monsterHealth.getProgress() == 0){
+                    if (monsterHealth.getProgress() == 0) {
                         youWinImage.setVisible(true);
                         System.out.println("You win!");
                         gameOver = true;
@@ -602,7 +611,7 @@ moveMonster();
         }
 
         public void running() {
-            money.set(valueOf(Integer.parseInt(money.getValue())-HUNTING_COST));
+            money.set(valueOf(Integer.parseInt(money.getValue()) - HUNTING_COST));
             if (!preyPeak) {
                 monsterHunt.cancel();
                 return;
@@ -622,7 +631,7 @@ moveMonster();
             enableButtons();
         }
 
-        protected void cancelled(){
+        protected void cancelled() {
             System.out.println("Entered");
             pausePU = false;
             harpoonButton.setDisable(false);
@@ -637,19 +646,18 @@ moveMonster();
         }
     }
 
-    private void disableButtons(){
+    private void disableButtons() {
         fishingBegin.setDisable(true);
         predatorFishing.setDisable(true);
         harpoonButton.setDisable(true);
         sellButton.setDisable(true);
     }
 
-    private void enableButtons(){
+    private void enableButtons() {
         fishingBegin.setDisable(false);
         predatorFishing.setDisable(false);
         harpoonButton.setDisable(false);
         sellButton.setDisable(false);
     }
-
 }
 
