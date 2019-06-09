@@ -132,14 +132,14 @@
                   <Font name="Arial Black" size="12.0" />
                </font>
             </Button>
-            <ImageView fx:id="gameOverImage" fitHeight="752.0" fitWidth="1000.0" layoutX="1.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@animation/game-over.gif" />
-               </image>
-            </ImageView>
             <ImageView fx:id="youWinImage" fitHeight="675.0" fitWidth="719.0" layoutX="226.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
                   <Image url="@animation/ChristmasAndNewYear_NewYearNewYou-512.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="gameOverImage" fitHeight="752.0" fitWidth="1000.0" layoutX="1.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@animation/game-over.gif" />
                </image>
             </ImageView>
             <Button fx:id="harpoonButton" layoutX="774.0" layoutY="214.0" mnemonicParsing="false" onMouseClicked="#harpoonAction" prefHeight="48.0" prefWidth="75.0" style="-fx-background-color: #ffffff; -fx-border-radius: 10;" text="buy &#10;harpoon" textAlignment="CENTER">
@@ -216,9 +216,6 @@
                   <Image url="@animation/lightwave.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="266.0" layoutY="-62.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="511.0" layoutY="-55.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fitHeight="100.0" fitWidth="208.0" layoutX="785.0" layoutY="-48.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@animation/lightwave.png" />
@@ -242,6 +239,11 @@
             <ImageView fx:id="fishermanImage" fitHeight="150.0" fitWidth="200.0" layoutX="742.0" layoutY="-60.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="58.0">
                <image>
                   <Image url="@animation/66e1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="harpoonImage" fitHeight="65.0" fitWidth="60.0" layoutX="788.0" layoutY="-16.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@animation/Spear_Bolt.png" />
                </image>
             </ImageView>
          </children>
