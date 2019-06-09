@@ -35,7 +35,7 @@
                   <Image url="@animation/cloud.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="96.0" fitWidth="133.0" layoutX="391.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="96.0" fitWidth="133.0" layoutX="399.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@animation/cloud.png" />
                </image>
@@ -106,26 +106,24 @@
                <font>
                   <Font name="Arial Black" size="12.0" />
                </font></Label>
-            <Button fx:id="harpoonButton" layoutX="778.0" layoutY="214.0" mnemonicParsing="false" onMouseClicked="#harpoonAction" prefHeight="48.0" prefWidth="78.0" style="-fx-background-color: #ffffff;" text="buy &#10;harpoon" textAlignment="CENTER">
-               <tooltip>
-                  <Tooltip fx:id="harpoonTooltip" text="price" />
-               </tooltip>
+            <Button fx:id="fishingBegin" layoutX="437.0" layoutY="47.0" mnemonicParsing="false" onMouseClicked="#goFishing" prefHeight="48.0" prefWidth="70.0" style="-fx-background-color: #ffffff;" text="prey&#10;fishing" textAlignment="CENTER">
                <font>
                   <Font name="Arial Black" size="12.0" />
                </font>
-            </Button>
-            <Button fx:id="fishingBegin" layoutX="430.0" layoutY="47.0" mnemonicParsing="false" onMouseClicked="#goFishing" prefHeight="48.0" prefWidth="70.0" style="-fx-background-color: #ffffff;" text="prey&#10;fishing" textAlignment="CENTER">
-               <font>
-                  <Font name="Arial Black" size="12.0" />
-               </font></Button>
-            <Button fx:id="predatorFishing" layoutX="566.0" layoutY="147.0" mnemonicParsing="false" onMouseClicked="#fishingForPredator" prefHeight="48.0" prefWidth="75.0" style="-fx-background-color: #ffffff;" text="predator&#10;fishing" textAlignment="CENTER">
+               <tooltip>
+                  <Tooltip fx:id="preyTooltip" text="Empty Tooltip" />
+               </tooltip></Button>
+            <Button fx:id="predatorFishing" layoutX="566.0" layoutY="147.0" mnemonicParsing="false" onMouseClicked="#fishingForPredator" prefHeight="48.0" prefWidth="75.0" style="-fx-background-color: #ffffff; -fx-border-radius: 20;" text="predator&#10;fishing" textAlignment="CENTER">
                <font>
                   <Font name="Arial Black" size="12.0" />
                </font>
                <effect>
                   <Blend />
-               </effect></Button>
-            <ProgressBar fx:id="monsterHealth" layoutX="26.0" layoutY="190.0" prefHeight="18.0" prefWidth="141.0" progress="0.35" style="-fx-background-color: #BB5762;" />
+               </effect>
+               <tooltip>
+                  <Tooltip fx:id="predatorTooltip" text="Empty Tooltip" />
+               </tooltip></Button>
+            <ProgressBar fx:id="monsterHealth" layoutX="26.0" layoutY="190.0" prefHeight="18.0" prefWidth="141.0" progress="0.6" style="-fx-background-color: #BB5762;" />
             <Button fx:id="upgradeButton" layoutX="300.0" layoutY="237.0" mnemonicParsing="false" onMouseClicked="#upgradeFisherman" style="-fx-background-color: #ffffff; -fx-background-radius: 30;" text="Upgrade">
                <tooltip>
                   <Tooltip fx:id="upgradeTooltip" text="Empty Tooltip" />
@@ -144,6 +142,14 @@
                   <Image url="@animation/game-over.gif" />
                </image>
             </ImageView>
+            <Button fx:id="harpoonButton" layoutX="774.0" layoutY="214.0" mnemonicParsing="false" onMouseClicked="#harpoonAction" prefHeight="48.0" prefWidth="75.0" style="-fx-background-color: #ffffff; -fx-border-radius: 10;" text="buy &#10;harpoon" textAlignment="CENTER">
+               <tooltip>
+                  <Tooltip fx:id="harpoonTooltip" text="price" />
+               </tooltip>
+               <font>
+                  <Font name="Arial Black" size="12.0" />
+               </font>
+            </Button>
          </children>
          <effect>
             <Blend />
