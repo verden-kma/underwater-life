@@ -35,6 +35,8 @@ public class Controller {
 
     @FXML
     private ImageView monsterImage;
+    @FXML
+    private ImageView monsterImage2;
 
     @FXML
     private ImageView harpoonImage;
@@ -85,7 +87,7 @@ public class Controller {
     @FXML
     Tooltip preyTooltip, predatorTooltip;
 
-    private Media btnClick = new Media(Paths.get("src/sample/animation/3.mp3").toUri().toString());
+    private Media btnClick = new Media(Paths.get("src/sample/animation/1.mp3").toUri().toString());
     private MediaPlayer mediaPlayer = new MediaPlayer(btnClick);
     private Media btnMpnstr = new Media(Paths.get("src/sample/animation/0.mp3").toUri().toString());
     private MediaPlayer mediaPlayerMonstr = new MediaPlayer(btnClick);
@@ -232,6 +234,7 @@ public class Controller {
     }
 
     public void fishingForPredator() {
+
         movingMan();
         preyFishing = false;
         fimp.restart();
@@ -316,7 +319,7 @@ public class Controller {
                             if (!predPeak) System.out.println("PredatorPeak!");
                             predPeak = true;
                             if (predCP > PREDATOR_MAX * 0.99) {
-                                wakeMonster();
+                                wakeMonster2();
                             }
                         } else predPeak = false;
 
@@ -334,6 +337,14 @@ public class Controller {
         protected void failed() {
             System.out.println("Population Failed");
         }
+        private void wakeMonster2() {
+
+            moveMonster2();
+//monsterImage.setVisible(false);
+            autoNotification = true;
+            pausePU = true;
+            Platform.runLater(() -> monster.restart());
+        }
 
         private void wakeMonster() {
 
@@ -343,6 +354,20 @@ public class Controller {
             pausePU = true;
             Platform.runLater(() -> monster.restart());
         }
+    }
+    private void moveMonster2() {
+        monsterImage2.setVisible(true);
+        mediaPlayerMonstr.setAudioSpectrumInterval(6);
+        mediaPlayerMonstr.play();
+        tt= new TranslateTransition(Duration.seconds(3),monsterImage2);
+        tt.setFromX(0f);
+        tt.setByX(960f);
+        tt.setCycleCount(2);
+        tt.setAutoReverse(true);
+        tt.playFromStart();
+
+        // monsterImage.setVisible(false);
+
     }
 
     private void moveMonster() {
