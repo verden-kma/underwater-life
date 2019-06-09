@@ -87,14 +87,11 @@ public class Controller {
     @FXML
     Tooltip preyTooltip, predatorTooltip;
 
-    private Media btnClick = new Media(Paths.get("src/sample/animation/1.mp3").toUri().toString());
+    private Media btnClick = new Media(Paths.get("src/sample/animation/BAH.mp3").toUri().toString());
     private MediaPlayer mediaPlayer = new MediaPlayer(btnClick);
-    private Media btnMpnstr = new Media(Paths.get("src/sample/animation/0.mp3").toUri().toString());
-    private MediaPlayer mediaPlayerMonstr = new MediaPlayer(btnClick);
     private volatile boolean pausePU;
     private volatile boolean preyPeak;
     private volatile boolean predPeak;
-    //private volatile boolean autoNotification;
     private volatile boolean monsterInvokedByFishing;
     private volatile boolean gameOver;
 
@@ -141,6 +138,7 @@ public class Controller {
     private final long PREDATOR_MAX = population.getMaxPopulations().getV2();
     //money that gamer pays for attacking the monster
     private final int HUNTING_COST = 75;
+    private final long FEE_PERIOD = 150;
     private final int PREY_FISHING_FEE = (int) (PREY_MAX * SUCCESS_GAP * PREY_PRICE * NET_CATCH_DEFAULT);
     private final int PREDATOR_FISHING_FEE = (int) (PREDATOR_MAX * SUCCESS_GAP * PREDATOR_PRICE * NET_CATCH_DEFAULT);
     private TranslateTransition tt;
@@ -157,6 +155,10 @@ public class Controller {
         upgradeTooltip.setText(valueOf(UPGRADE_PRICE));
         preyTooltip.setText(valueOf(PREY_FISHING_FEE));
         predatorTooltip.setText(valueOf(PREDATOR_FISHING_FEE));
+        mediaPlayer.setOnEndOfMedia(() -> {
+            mediaPlayer.seek(Duration.ZERO);
+            mediaPlayer.play();
+        });
     }
 
     private TimerTask rentPayment = new TimerTask() {
@@ -202,18 +204,20 @@ public class Controller {
         predatorLabel.textProperty().bind(predatorProperty);
         pu.start();
         timer.schedule(monsterDigestion, MONSTER_INITIAL_DELAY, 10000);
-        timer.schedule(rentPayment, 0, 150);
+        timer.schedule(rentPayment, 0, FEE_PERIOD);
     }
 
-    /*public void startSimulation(long delay, long period) {
+    //for setting various levels
+    public void startSimulation(long feePeriod, long monsterPeriod, long monsterDelay, String money) {
         mediaPlayer.play();
         monsterImage.setVisible(false);
         preyLabel.textProperty().bind(preyProperty);
         predatorLabel.textProperty().bind(predatorProperty);
         pu.start();
-        timer.schedule(monsterDigestion, MONSTER_INITIAL_DELAY, 10000);
-        timer.schedule(rentPayment, 0, 150);
-    }*/
+        timer.schedule(monsterDigestion, monsterDelay, monsterPeriod);
+        timer.schedule(rentPayment, 0, feePeriod);
+        this.money.set(money);
+    }
 
     @FXML
     public void goFishing() {
@@ -361,7 +365,6 @@ public class Controller {
 
             moveMonster2();
 //monsterImage.setVisible(false);
-            //autoNotification = true;
             pausePU = true;
             Platform.runLater(() -> monster.restart());
         }
@@ -370,7 +373,6 @@ public class Controller {
 
             moveMonster();
 //monsterImage.setVisible(false);
-            //autoNotification = true;
             pausePU = true;
             Platform.runLater(() -> monster.restart());
         }
@@ -378,22 +380,16 @@ public class Controller {
 
     private void moveMonster2() {
         moveMonsterExtract(monsterImage2);
-
         // monsterImage.setVisible(false);
 
     }
 
     private void moveMonster() {
         moveMonsterExtract(monsterImage);
-
-        // monsterImage.setVisible(false);
-
     }
 
     private void moveMonsterExtract(ImageView monsterImage) {
         monsterImage.setVisible(true);
-        mediaPlayerMonstr.setAudioSpectrumInterval(6);
-        mediaPlayerMonstr.play();
         tt = new TranslateTransition(Duration.seconds(3), monsterImage);
         tt.setFromX(0f);
         tt.setByX(960f);
@@ -512,7 +508,6 @@ public class Controller {
                         }
                         monsterPredation(false);
                     }
-                    //if (autoNotification) autoNotification = false;
                     return null;
                 }
 

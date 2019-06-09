@@ -30,9 +30,13 @@ public class Main extends Application {
         mainScene = new Scene(loader.load(), 1000, 700);
     }
 
-    static void changeScene() {
+    static void changeScene(int level) {
         stage.setScene(mainScene);
-        ((Controller) loader.getController()).startSimulation();
+        if (level == 0) ((Controller) loader.getController()).startSimulation();
+        else if (level == 1) ((Controller) loader.getController()).startSimulation(130, 8000,  5000, "1500");
+        else if (level == 2) ((Controller) loader.getController()).startSimulation(110, 6000,  4000, "2000");
+        else if (level == 3) ((Controller) loader.getController()).startSimulation(90, 4000,  3000, "2500");
+        else if (level == 4) ((Controller) loader.getController()).startSimulation(75, 2000,  2000, "3000");
     }
 
 
