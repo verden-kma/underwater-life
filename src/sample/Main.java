@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -13,6 +14,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        Image icon = new Image("/sample/animation/icon.png");
+        primaryStage.getIcons().add(icon);
         stage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("initialScene.fxml"));
         root.setStyle("-fx-background-image: url('" + "/sample/animation/456.jpg" + "'); " +
