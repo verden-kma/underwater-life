@@ -587,9 +587,19 @@ public class Controller {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        movingHarpoon();
         System.out.println("Meet now.");
         return sleepReminder;
     }
+    private void movingHarpoon(){
+        TranslateTransition tt3= new TranslateTransition(Duration.seconds(0.5), harpoonImage);
+        tt3.setFromY(0f);
+        tt3.setByY(30f);
+        tt3.setCycleCount(2);
+        tt3.setAutoReverse(true);
+        tt3.playFromStart();
+    }
+
 
     //hunting after monster is only possible when it is near to the surface (preyPeak)
     private class MonsterHunt extends Service<Void> {
@@ -650,16 +660,8 @@ public class Controller {
             }
             enableButtons();
         }
-private void movingHarpoon(){
-            TranslateTransition tt3= new TranslateTransition(Duration.seconds(0.5), harpoonImage);
-    tt3.setFromY(0f);
-    tt3.setByY(30f);
-    tt3.setCycleCount(2);
-    tt3.setAutoReverse(true);
-    tt3.playFromStart();
-}
         protected void cancelled(){
-            movingHarpoon();
+            movingMan();
             System.out.println("Entered");
 
             pausePU = false;
