@@ -3,6 +3,8 @@ import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 
 import javafx.application.Platform;
@@ -15,6 +17,7 @@ import javafx.scene.control.Tooltip;
 import javafx.util.Duration;
 import tempBackend.Population;
 
+import java.nio.file.Paths;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -32,6 +35,8 @@ public class Controller {
     @FXML
     private ImageView monsterImage;
 
+    @FXML
+    private ImageView harpoonImage;
 
     @FXML
     Label preyLabel;
@@ -75,7 +80,10 @@ public class Controller {
 
     @FXML
     Tooltip upgradeTooltip;
-
+    private Media btnClick = new Media(Paths.get("src/sample/animation/3.mp3").toUri().toString());
+    private MediaPlayer mediaPlayer = new MediaPlayer(btnClick);
+    private Media btnMpnstr = new Media(Paths.get("src/sample/animation/0.mp3").toUri().toString());
+    private MediaPlayer mediaPlayerMonstr = new MediaPlayer(btnClick);
     private volatile boolean pausePU;
     private volatile boolean preyPeak;
     private volatile boolean predPeak;
@@ -175,8 +183,10 @@ public class Controller {
         }
     };
 
+
     @FXML
     public void startSimulation() {
+        mediaPlayer.play();
         monsterImage.setVisible(false);
         preyLabel.textProperty().bind(preyProperty);
         predatorLabel.textProperty().bind(predatorProperty);
@@ -199,6 +209,12 @@ fisher=fishermanImage;
         else
             fisher=fishermanImageSecond;
        tt= new TranslateTransition(Duration.seconds(2.5),fisher);
+       TranslateTransition tt2=new TranslateTransition(Duration.seconds(2.5),harpoonImage);
+        tt2.setFromX(0f);
+        tt2.setByX(-730f);
+        tt2.setCycleCount(2);
+        tt2.setAutoReverse(true);
+        tt2.playFromStart();
        tt.setFromX(0f);
         tt.setByX(-730f);
         tt.setCycleCount(2);
@@ -236,8 +252,10 @@ fisher=fishermanImage;
         if (!harpoonIsBought) {
             Platform.runLater(() -> money.set(valueOf(Integer.parseInt(money.get()) - HARPOON_PRICE)));
             harpoonIsBought = true;
+            harpoonImage.setVisible(true);
             harpoonButton.setText("Attack!");
             harpoonTooltip.setText("hunt monster");
+
             return;
         }
         monsterHunt.restart();
@@ -321,12 +339,15 @@ moveMonster();
     }
     private void moveMonster(){
         monsterImage.setVisible(true);
+        mediaPlayerMonstr.setAudioSpectrumInterval(6);
+        mediaPlayerMonstr.play();
         tt= new TranslateTransition(Duration.seconds(3),monsterImage);
         tt.setFromX(0f);
         tt.setByX(960f);
         tt.setCycleCount(2);
         tt.setAutoReverse(true);
         tt.playFromStart();
+
        // monsterImage.setVisible(false);
 
     }
@@ -621,9 +642,18 @@ moveMonster();
             }
             enableButtons();
         }
-
+private void movingHarpoon(){
+            TranslateTransition tt3= new TranslateTransition(Duration.seconds(0.5), harpoonImage);
+    tt3.setFromY(0f);
+    tt3.setByY(30f);
+    tt3.setCycleCount(2);
+    tt3.setAutoReverse(true);
+    tt3.playFromStart();
+}
         protected void cancelled(){
+            movingHarpoon();
             System.out.println("Entered");
+
             pausePU = false;
             harpoonButton.setDisable(false);
             synchronized (populationLock) {
