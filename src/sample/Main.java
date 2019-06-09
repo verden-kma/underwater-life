@@ -19,7 +19,7 @@ public class Main extends Application {
                 "-fx-background-position: center center; " +
                 "-fx-background-repeat: stretch;" +
                 "-fx-background-size: 100% 100%");
-        primaryStage.setTitle("starter");
+        primaryStage.setTitle("stern fisherman");
         primaryStage.setScene(new Scene(root, 700, 490));
         primaryStage.setResizable(false);
         primaryStage.alwaysOnTopProperty();

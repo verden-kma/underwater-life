@@ -94,7 +94,7 @@ public class Controller {
     private volatile boolean pausePU;
     private volatile boolean preyPeak;
     private volatile boolean predPeak;
-    private volatile boolean autoNotification;
+    //private volatile boolean autoNotification;
     private volatile boolean monsterInvokedByFishing;
     private volatile boolean gameOver;
 
@@ -124,7 +124,7 @@ public class Controller {
     private final int HARPOON_PRICE = 2000;
     private final int UPGRADE_PRICE = 1500;
     //minimum % of victim's population that is necessary for profitable fishing
-    private final double SUCCESS_GAP = 0.51;
+    private final double SUCCESS_GAP = 0.65;
     private final double MONSTER_HEAL = 0.2;
     private final double HARPOON_DAMAGE = 0.3;
     //affects fee
@@ -205,6 +205,16 @@ public class Controller {
         timer.schedule(rentPayment, 0, 150);
     }
 
+    /*public void startSimulation(long delay, long period) {
+        mediaPlayer.play();
+        monsterImage.setVisible(false);
+        preyLabel.textProperty().bind(preyProperty);
+        predatorLabel.textProperty().bind(predatorProperty);
+        pu.start();
+        timer.schedule(monsterDigestion, MONSTER_INITIAL_DELAY, 10000);
+        timer.schedule(rentPayment, 0, 150);
+    }*/
+
     @FXML
     public void goFishing() {
         fishermanImageSecond.setLayoutY(-60f);
@@ -214,21 +224,22 @@ public class Controller {
         preyFishing = true;
         fimp.restart();
     }
+
     @FXML
     public void movingMan() {
         ImageView fisher;
         if (fishermanImage.isVisible())
             fisher = fishermanImage;
         else
-            fisher=fishermanImageSecond;
-       tt= new TranslateTransition(Duration.seconds(2.5),fisher);
-       TranslateTransition tt2=new TranslateTransition(Duration.seconds(2.5),harpoonImage);
+            fisher = fishermanImageSecond;
+        tt = new TranslateTransition(Duration.seconds(2.5), fisher);
+        TranslateTransition tt2 = new TranslateTransition(Duration.seconds(2.5), harpoonImage);
         tt2.setFromX(0f);
         tt2.setByX(-730f);
         tt2.setCycleCount(2);
         tt2.setAutoReverse(true);
         tt2.playFromStart();
-       tt.setFromX(0f);
+        tt.setFromX(0f);
         tt.setByX(-730f);
         tt.setCycleCount(2);
         tt.setAutoReverse(true);
@@ -251,6 +262,7 @@ public class Controller {
     private void sellFish() {
         short pricePerFish = preyFishing ? PREY_PRICE : PREDATOR_PRICE;
         money.set(valueOf(Integer.parseInt(money.getValue()) + lootCount * pricePerFish));
+        lootCount = 0;
         lootMessage.set("0");
     }
 
@@ -344,11 +356,12 @@ public class Controller {
         protected void failed() {
             System.out.println("Population Failed");
         }
+
         private void wakeMonster2() {
 
             moveMonster2();
 //monsterImage.setVisible(false);
-            autoNotification = true;
+            //autoNotification = true;
             pausePU = true;
             Platform.runLater(() -> monster.restart());
         }
@@ -357,39 +370,36 @@ public class Controller {
 
             moveMonster();
 //monsterImage.setVisible(false);
-            autoNotification = true;
+            //autoNotification = true;
             pausePU = true;
             Platform.runLater(() -> monster.restart());
         }
     }
+
     private void moveMonster2() {
-        monsterImage2.setVisible(true);
-        mediaPlayerMonstr.setAudioSpectrumInterval(6);
-        mediaPlayerMonstr.play();
-        tt= new TranslateTransition(Duration.seconds(3),monsterImage2);
-        tt.setFromX(0f);
-        tt.setByX(960f);
-        tt.setCycleCount(2);
-        tt.setAutoReverse(true);
-        tt.playFromStart();
+        moveMonsterExtract(monsterImage2);
 
         // monsterImage.setVisible(false);
 
     }
 
     private void moveMonster() {
+        moveMonsterExtract(monsterImage);
+
+        // monsterImage.setVisible(false);
+
+    }
+
+    private void moveMonsterExtract(ImageView monsterImage) {
         monsterImage.setVisible(true);
         mediaPlayerMonstr.setAudioSpectrumInterval(6);
         mediaPlayerMonstr.play();
-        tt= new TranslateTransition(Duration.seconds(3),monsterImage);
+        tt = new TranslateTransition(Duration.seconds(3), monsterImage);
         tt.setFromX(0f);
         tt.setByX(960f);
         tt.setCycleCount(2);
         tt.setAutoReverse(true);
         tt.playFromStart();
-
-       // monsterImage.setVisible(false);
-
     }
 
     private class FishingImpact extends Service<Void> {
@@ -485,6 +495,8 @@ public class Controller {
                     if (!monsterFoodDigested) return null;
                     if (preyPeak) {
                         if (monsterInvokedByFishing) {
+                            //TODO: VASYLYNA
+                            moveMonster();
                             System.out.println("Testing prey fishing monster");
                             monsterFisherInteraction(true);
                             return null;
@@ -492,13 +504,15 @@ public class Controller {
                         monsterPredation(true);
                     } else if (predPeak) {
                         if (monsterInvokedByFishing) {
+                            //TODO: VASYLYNA
+                            moveMonster2();
                             System.out.println("Testing predator fishing monster");
                             monsterFisherInteraction(false);
                             return null;
                         }
                         monsterPredation(false);
                     }
-                    if (autoNotification) autoNotification = false;
+                    //if (autoNotification) autoNotification = false;
                     return null;
                 }
 
@@ -623,8 +637,9 @@ public class Controller {
         System.out.println("Meet now.");
         return sleepReminder;
     }
-    private void movingHarpoon(){
-        TranslateTransition tt3= new TranslateTransition(Duration.seconds(0.5), harpoonImage);
+
+    private void movingHarpoon() {
+        TranslateTransition tt3 = new TranslateTransition(Duration.seconds(0.5), harpoonImage);
         tt3.setFromY(0f);
         tt3.setByY(30f);
         tt3.setCycleCount(2);
@@ -638,6 +653,8 @@ public class Controller {
         protected Task createTask() {
             return new Task() {
                 protected Void call() {
+                    //TODO:     VASYLYNA
+                    moveMonster();
                     long CP = population.getPreyPopulation();
                     double stepsPassedBefore = 1.0 / (1.0 / MONSTER_STEPS + 2.0 / FISHING_STEPS);
                     int ispb = (int) stepsPassedBefore;
@@ -692,7 +709,8 @@ public class Controller {
             }
             enableButtons();
         }
-        protected void cancelled(){
+
+        protected void cancelled() {
             movingMan();
             System.out.println("Entered");
 
