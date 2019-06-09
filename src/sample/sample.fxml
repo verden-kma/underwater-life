@@ -341,7 +341,7 @@
             <Image url="@animation/tumblr_n8duq23Qot1tv7h35o1_1280.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="monsterImage2" fitHeight="150.0" fitWidth="200.0" layoutX="-108.0" layoutY="598.0" pickOnBounds="true" preserveRatio="true" x="-90.0">
+      <ImageView fx:id="monsterImage2" fitHeight="150.0" fitWidth="200.0" layoutX="-108.0" layoutY="493.0" pickOnBounds="true" preserveRatio="true" x="-90.0">
          <image>
             <Image url="@animation/tumblr_n8duq23Qot1tv7h35o1_1280.png" />
          </image>

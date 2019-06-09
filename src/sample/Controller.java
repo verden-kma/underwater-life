@@ -207,6 +207,8 @@ public class Controller {
 
     @FXML
     public void goFishing() {
+        fishermanImage.setLayoutY(-60f);
+        harpoonImage.setLayoutY(-16f);
         movingMan();
         preyFishing = true;
         fimp.restart();
@@ -236,6 +238,8 @@ public class Controller {
     public void fishingForPredator() {
 
         movingMan();
+        harpoonImage.setLayoutY(106f);
+        fishermanImage.setLayoutY(60f);
         preyFishing = false;
         fimp.restart();
     }
