@@ -245,6 +245,11 @@
                   <Image url="@animation/game-over.gif" />
                </image>
             </ImageView>
+            <ImageView fx:id="explosionImage" fitHeight="80.0" fitWidth="133.0" layoutX="776.0" layoutY="-13.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@animation/f180d9b57613193ba056f427e81eaf8e.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
       <Accordion />

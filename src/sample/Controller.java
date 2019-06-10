@@ -82,6 +82,8 @@ public class Controller {
     private ImageView fishermanImageSecond;
 
     @FXML
+    private ImageView explosionImage;
+    @FXML
     Tooltip upgradeTooltip;
 
     @FXML
@@ -221,9 +223,9 @@ public class Controller {
 
     @FXML
     public void goFishing() {
-        fishermanImageSecond.setLayoutY(-60f);
-        fishermanImage.setLayoutY(-60f);
-        harpoonImage.setLayoutY(-16f);
+//        fishermanImageSecond.setLayoutY(-60f);
+//        fishermanImage.setLayoutY(-60f);
+//        harpoonImage.setLayoutY(-16f);
         movingMan(2.5,-730f,2);
         preyFishing = true;
         fimp.restart();
@@ -254,9 +256,9 @@ public class Controller {
     public void fishingForPredator() {
 
         //movingMan(2.5,-730f,2);
-        harpoonImage.setLayoutY(106f);
-        fishermanImageSecond.setLayoutY(60f);
-        fishermanImage.setLayoutY(60f);
+//        harpoonImage.setLayoutY(106f);
+//        fishermanImageSecond.setLayoutY(60f);
+//        fishermanImage.setLayoutY(60f);
         movingMan(2.5,-730f,2);
         preyFishing = false;
         fimp.restart();
@@ -511,7 +513,7 @@ public class Controller {
                     } else if (predPeak) {
                         if (monsterInvokedByFishing) {
                             //TODO: VASYLYNA
-                            tt.stop();
+                            //tt.stop();
                             movingMan(0.1,-20f,20);
                             tt.play();
                             moveMonster2();
@@ -642,8 +644,16 @@ public class Controller {
             e.printStackTrace();
         }
         movingHarpoon();
+        explosionImage.setVisible(true);
         System.out.println("Meet now.");
+        try {
+            sleep(2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        explosionImage.setVisible(false);
         return sleepReminder;
+
     }
 
     private void movingHarpoon() {
@@ -664,6 +674,7 @@ public class Controller {
                     //TODO:     VASYLYNA
 
                     moveMonster();
+                    movingHarpoon();
                     moveMonsterBack(monsterImage2);
                     moveMonsterBack(monsterImage);
                     long CP = population.getPreyPopulation();
