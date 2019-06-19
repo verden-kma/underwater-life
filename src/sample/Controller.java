@@ -18,6 +18,7 @@ import javafx.scene.control.Tooltip;
 import javafx.util.Duration;
 import tempBackend.Population;
 
+import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -86,8 +87,9 @@ public class Controller {
 
     @FXML
     Tooltip preyTooltip, predatorTooltip;
-
-    private Media btnClick = new Media(Paths.get("src/sample/animation/BAH.mp3").toUri().toString());
+    private final String SOUND_PATH = "/sample/animation/1.mp3";
+    final URL sound = getClass().getResource(SOUND_PATH);
+    private Media btnClick = new Media(sound.toString());
     private MediaPlayer mediaPlayer = new MediaPlayer(btnClick);
     private volatile boolean pausePU;
     private volatile boolean preyPeak;
@@ -133,7 +135,7 @@ public class Controller {
     private final long PAUSE = 1000;
     private final int FISHING_STEPS = 4;
     private final int MONSTER_STEPS = 5;
-    private final long MONSTER_INITIAL_DELAY = 0;//TODO: replace with 15 000 when the game is finished
+    private final long MONSTER_INITIAL_DELAY = 0; //had been planned to be 15000 but frontend didn't implement the feature
     private final long PREY_MAX = population.getMaxPopulations().getV1();
     private final long PREDATOR_MAX = population.getMaxPopulations().getV2();
     //money that gamer pays for attacking the monster
@@ -221,31 +223,31 @@ public class Controller {
 
     @FXML
     public void goFishing() {
-        fishermanImageSecond.setLayoutY(-60f);
-        fishermanImage.setLayoutY(-60f);
-        harpoonImage.setLayoutY(-16f);
-        movingMan(2.5,-730f,2);
+//        fishermanImageSecond.setLayoutY(-60f);
+//        fishermanImage.setLayoutY(-60f);
+//        harpoonImage.setLayoutY(-16f);
+        movingMan();
         preyFishing = true;
         fimp.restart();
     }
 
     @FXML
-    public void movingMan(double time, float x, int count) {
+    public void movingMan() {
         ImageView fisher;
         if (fishermanImage.isVisible())
             fisher = fishermanImage;
         else
             fisher = fishermanImageSecond;
-        tt = new TranslateTransition(Duration.seconds(time), fisher);
-        TranslateTransition tt2 = new TranslateTransition(Duration.seconds(time), harpoonImage);
+        tt = new TranslateTransition(Duration.seconds(2.5), fisher);
+        TranslateTransition tt2 = new TranslateTransition(Duration.seconds(2.5), harpoonImage);
         tt2.setFromX(0f);
-        tt2.setByX(x);
-        tt2.setCycleCount(count);
+        tt2.setByX(-730f);
+        tt2.setCycleCount(2);
         tt2.setAutoReverse(true);
         tt2.playFromStart();
         tt.setFromX(0f);
-        tt.setByX(x);
-        tt.setCycleCount(count);
+        tt.setByX(-730f);
+        tt.setCycleCount(2);
         tt.setAutoReverse(true);
         tt.playFromStart();
 
@@ -253,11 +255,8 @@ public class Controller {
 
     public void fishingForPredator() {
 
-        //movingMan(2.5,-730f,2);
-        harpoonImage.setLayoutY(106f);
-        fishermanImageSecond.setLayoutY(60f);
-        fishermanImage.setLayoutY(60f);
-        movingMan(2.5,-730f,2);
+//        movingMan();
+        movingMan();
         preyFishing = false;
         fimp.restart();
     }
@@ -397,15 +396,6 @@ public class Controller {
         tt.setAutoReverse(true);
         tt.playFromStart();
     }
-    private void moveMonsterBack(ImageView monsterImage) {
-        monsterImage.setVisible(true);
-        tt = new TranslateTransition(Duration.seconds(2), monsterImage);
-        tt.setFromY(0f);
-        tt.setByY(500f);
-        tt.setCycleCount(1);
-        tt.setAutoReverse(true);
-        tt.playFromStart();
-    }
 
     private class FishingImpact extends Service<Void> {
         @Override
@@ -501,7 +491,6 @@ public class Controller {
                     if (preyPeak) {
                         if (monsterInvokedByFishing) {
                             //TODO: VASYLYNA
-                            movingMan(0.1,-20f,20);
                             moveMonster();
                             System.out.println("Testing prey fishing monster");
                             monsterFisherInteraction(true);
@@ -511,9 +500,6 @@ public class Controller {
                     } else if (predPeak) {
                         if (monsterInvokedByFishing) {
                             //TODO: VASYLYNA
-                            tt.stop();
-                            movingMan(0.1,-20f,20);
-                            tt.play();
                             moveMonster2();
                             System.out.println("Testing predator fishing monster");
                             monsterFisherInteraction(false);
@@ -662,10 +648,7 @@ public class Controller {
             return new Task() {
                 protected Void call() {
                     //TODO:     VASYLYNA
-
                     moveMonster();
-                    moveMonsterBack(monsterImage2);
-                    moveMonsterBack(monsterImage);
                     long CP = population.getPreyPopulation();
                     double stepsPassedBefore = 1.0 / (1.0 / MONSTER_STEPS + 2.0 / FISHING_STEPS);
                     int ispb = (int) stepsPassedBefore;
@@ -722,7 +705,7 @@ public class Controller {
         }
 
         protected void cancelled() {
-            movingMan(2.5,-730f,2);
+            movingMan();
             System.out.println("Entered");
 
             pausePU = false;
