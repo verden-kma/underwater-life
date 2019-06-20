@@ -1,11 +1,14 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class Main extends Application {
     static Stage stage;
@@ -30,10 +33,16 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("sample.fxml"));
         this.loader = loader;
-        mainScene = new Scene(loader.load(), 1000, 700);
+        //mainScene = new Scene(loader.load(), 1000, 700);
     }
 
     static void changeScene(int level) {
+        try {
+            mainScene = new Scene(loader.load(), 1000, 700);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         stage.setScene(mainScene);
         if (level == 0) ((Controller) loader.getController()).startSimulation();
         else if (level == 1) ((Controller) loader.getController()).startSimulation(130, 8000,  5000, "1500");
@@ -44,6 +53,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+        final JFXPanel fxPanel = new JFXPanel();
         launch(args);
     }
 }
