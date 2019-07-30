@@ -13,9 +13,23 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="787.0" prefWidth="1000.0" snapToPixel="false" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller" >
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="787.0" prefWidth="1000.0" snapToPixel="false" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
-      <AnchorPane prefHeight="445.0" prefWidth="1000.0" style="-fx-background-color: #00FFFF;" AnchorPane.bottomAnchor="342.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="gameResultPane" prefHeight="787.0" prefWidth="1000.0">
+         <children>
+            <ImageView fx:id="youWinImage" fitHeight="675.0" fitWidth="725.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@animation/ChristmasAndNewYear_NewYearNewYou-512.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="gameOverImage" fitHeight="752.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@animation/game-over.gif" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="pane1" prefHeight="445.0" prefWidth="1000.0" style="-fx-background-color: #00FFFF;" AnchorPane.bottomAnchor="342.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fitHeight="68.0" fitWidth="107.0" layoutX="14.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="884.317756652832" AnchorPane.topAnchor="279.0">
                <image>
@@ -48,6 +62,11 @@
             <ImageView fitHeight="131.0" fitWidth="141.0" layoutX="266.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@animation/SUN.gif" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="68.0" fitWidth="102.0" layoutX="515.0" layoutY="262.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@animation/cloud.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="122.0" fitWidth="116.0" layoutX="583.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
@@ -123,7 +142,7 @@
                <tooltip>
                   <Tooltip fx:id="predatorTooltip" text="Empty Tooltip" />
                </tooltip></Button>
-            <ProgressBar fx:id="monsterHealth" layoutX="26.0" layoutY="190.0" prefHeight="18.0" prefWidth="141.0" progress="0.8" style="-fx-background-color: #BB5762;" />
+            <ProgressBar fx:id="monsterHealth" layoutX="26.0" layoutY="190.0" prefHeight="18.0" prefWidth="141.0" progress="0.1" style="-fx-background-color: #BB5762;" />
             <Button fx:id="upgradeButton" layoutX="300.0" layoutY="237.0" mnemonicParsing="false" onMouseClicked="#upgradeFisherman" style="-fx-background-color: #ffffff; -fx-background-radius: 30;" text="Upgrade">
                <tooltip>
                   <Tooltip fx:id="upgradeTooltip" text="Empty Tooltip" />
@@ -132,11 +151,6 @@
                   <Font name="Arial Black" size="12.0" />
                </font>
             </Button>
-            <ImageView fx:id="gameOverImage" fitHeight="752.0" fitWidth="1000.0" layoutX="1.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@animation/game-over.gif" />
-               </image>
-            </ImageView>
             <Button fx:id="harpoonButton" layoutX="774.0" layoutY="214.0" mnemonicParsing="false" onMouseClicked="#harpoonAction" prefHeight="48.0" prefWidth="75.0" style="-fx-background-color: #ffffff; -fx-border-radius: 10;" text="buy &#10;harpoon" textAlignment="CENTER">
                <tooltip>
                   <Tooltip fx:id="harpoonTooltip" text="price" />
@@ -145,24 +159,14 @@
                   <Font name="Arial Black" size="12.0" />
                </font>
             </Button>
-            <ImageView fx:id="youWinImage" fitHeight="675.0" fitWidth="719.0" layoutX="226.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@animation/ChristmasAndNewYear_NewYearNewYou-512.png" />
-               </image>
-            </ImageView>
          </children>
          <effect>
             <Blend />
          </effect>
       </AnchorPane>
       <Accordion />
-      <AnchorPane layoutX="-14.0" layoutY="250.0" prefHeight="186.0" prefWidth="1000.0" style="-fx-background-color: #99CCFF;" AnchorPane.bottomAnchor="165.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <AnchorPane fx:id="pane2" layoutX="-14.0" layoutY="250.0" prefHeight="186.0" prefWidth="1000.0" style="-fx-background-color: #99CCFF;" AnchorPane.bottomAnchor="165.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <ImageView fitHeight="68.0" fitWidth="102.0" layoutX="511.0" layoutY="-97.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@animation/cloud.png" />
-               </image>
-            </ImageView>
             <ImageView fitHeight="100.0" fitWidth="208.0" layoutX="392.0" layoutY="-48.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@animation/lightwave.png" />
@@ -248,7 +252,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="104.0" layoutY="389.0" prefHeight="150.0" prefWidth="1000.0" style="-fx-background-color: #0000CC;" AnchorPane.bottomAnchor="58.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <AnchorPane fx:id="pane1" layoutX="104.0" layoutY="389.0" prefHeight="150.0" prefWidth="1000.0" style="-fx-background-color: #0000CC;" AnchorPane.bottomAnchor="58.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <ImageView fitHeight="134.0" fitWidth="262.0" layoutY="-65.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -307,7 +311,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane layoutY="719.0" prefHeight="17.0" prefWidth="1000.0" style="-fx-background-color: #000000;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <AnchorPane fx:id="pane4" layoutY="719.0" prefHeight="17.0" prefWidth="1000.0" style="-fx-background-color: #000000;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <ImageView fitHeight="137.0" fitWidth="262.0" layoutX="-45.0" layoutY="-66.0" pickOnBounds="true" preserveRatio="true">
                <image>

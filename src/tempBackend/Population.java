@@ -12,7 +12,7 @@ public class Population {
     }
 
     private long preyPopulation = 4000;
-    private long predatorPopulation = 2000;
+    private long predatorPopulation = 200;
 
     private final double  preyGC = 5e-3;
     private final double  preyDC = 5e-6;
