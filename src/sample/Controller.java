@@ -3,7 +3,9 @@ package sample;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
@@ -28,6 +30,9 @@ import static java.lang.String.valueOf;
 import static java.lang.Thread.sleep;
 
 public class Controller {
+
+    @FXML
+    private AnchorPane mainPane;
 
     @FXML
     private Text moneyLabel;
@@ -75,14 +80,7 @@ public class Controller {
     Button upgradeButton;
 
     @FXML
-    private ImageView youWinImage;
-
-    @FXML
-    private ImageView gameOverImage;
-
-    @FXML
     private ImageView fishermanImageSecond;
-
 
     @FXML
     Tooltip upgradeTooltip;
@@ -101,7 +99,7 @@ public class Controller {
 
     private SimpleStringProperty preyProperty = new SimpleStringProperty();
     private SimpleStringProperty predatorProperty = new SimpleStringProperty();
-    private SimpleStringProperty money = new SimpleStringProperty("50000");
+    private SimpleStringProperty money = new SimpleStringProperty("5000");
     private SimpleStringProperty lootMessage = new SimpleStringProperty("0");
 
     private boolean monsterFoodDigested;
@@ -179,7 +177,7 @@ public class Controller {
             }
             int newValue = Integer.parseInt(money.get()) - 1;
             if (newValue < 0) {
-                gameOverImage.setVisible(true);
+                showFinalImage("sample/animation/game-over.gif");
                 System.out.println("You Lose!");
                 gameOver = true;
                 cancel();
@@ -226,9 +224,6 @@ public class Controller {
 
     @FXML
     public void goFishing() {
-//        fishermanImageSecond.setLayoutY(-60f);
-//        fishermanImage.setLayoutY(-60f);
-//        harpoonImage.setLayoutY(-16f);
         movingMan();
         preyFishing = true;
         fimp.restart();
@@ -332,7 +327,6 @@ public class Controller {
 
                         if (population.getPreyPopulation() > PREY_MAX * 0.9) {
                             if (!preyPeak) System.out.println("PreyPeak!");
-                            //TODO: added for testing purposes
                             preyPeak = true;
                             if (preyCP > PREY_MAX * 0.99) {
                                 wakeMonster();
@@ -364,7 +358,6 @@ public class Controller {
         private void wakeMonster2() {
 
             moveMonster2();
-//monsterImage.setVisible(false);
             pausePU = true;
             Platform.runLater(() -> monster.restart());
         }
@@ -372,7 +365,6 @@ public class Controller {
         private void wakeMonster() {
 
             moveMonster();
-//monsterImage.setVisible(false);
             pausePU = true;
             Platform.runLater(() -> monster.restart());
         }
@@ -380,8 +372,6 @@ public class Controller {
 
     private void moveMonster2() {
         moveMonsterExtract(monsterImage2);
-        // monsterImage.setVisible(false);
-
     }
 
     private void moveMonster() {
@@ -491,7 +481,6 @@ public class Controller {
                     if (!monsterFoodDigested) return null;
                     if (preyPeak) {
                         if (monsterInvokedByFishing) {
-                            //TODO: VASYLYNA
                             moveMonster();
                             System.out.println("Testing prey fishing monster");
                             monsterFisherInteraction(true);
@@ -501,7 +490,6 @@ public class Controller {
                         monsterPredation(true);
                     } else if (predPeak) {
                         if (monsterInvokedByFishing) {
-                            //TODO: VASYLYNA
                             moveMonster2();
                             System.out.println("Testing predator fishing monster");
                             monsterFisherInteraction(false);
@@ -566,7 +554,6 @@ public class Controller {
                 e.printStackTrace();
             }
             return Math.round(predatorCP * MONSTER_EAT * (MONSTER_STEPS - ispb + 1) / MONSTER_STEPS);
-
         }
 
         private void monsterFisherInteraction(boolean preyIsVictim) {
@@ -624,11 +611,6 @@ public class Controller {
 
     private long sleepBeforeMeeting(double stepsPassedBefore, int ispb) {
         long sleepReminder = Math.round((1.0 - (stepsPassedBefore - ispb)) * PAUSE);
-//        try {
-//            sleep(Math.round((stepsPassedBefore - ispb) * PAUSE - HARPOON_TIME));
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
         movingHarpoon();
         System.out.println("Meet now.");
         return sleepReminder;
@@ -651,47 +633,52 @@ public class Controller {
         protected Task createTask() {
             return new Task() {
                 protected Void call() {
-                    updateHuntStatus();
+                    try {
 
-                    if (!failToHunt) {
-                        moveMonster();
-                        movingMan();
-                    }
-                    else {
-                        movingMan();
-                        try {
-                            TimeUnit.SECONDS.sleep(MONSTER_STEPS);
+                        updateHuntStatus();
+
+                        if (!failToHunt) {
+                            moveMonster();
+                            movingMan();
+                        } else {
+                            movingMan();
+                            try {
+                                TimeUnit.SECONDS.sleep(MONSTER_STEPS);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            System.out.println("MonsterHunt canceled!");
+                            cancel();
+                            return null;
+                        }
+
+                        long CP = population.getPreyPopulation();
+                        double stepsPassedBefore = 1.0 / (1.0 / MONSTER_STEPS + 2.0 / FISHING_STEPS);
+                        int ispb = (int) stepsPassedBefore;
+                        int stepCounter = 0;
+                        double currentHealth = monsterHealth.getProgress();
+                        long taken = Math.round(CP * MONSTER_EAT * ispb / MONSTER_STEPS);
+
+                        System.out.println("after Exception");
+                        for (double i = 1.0 / ispb; i <= ispb; i += 1.0 / ispb) {
+                            monsterFisherPredation(true, CP, taken, i, 0, PREY_LOOT_MESSAGE, ++stepCounter, currentHealth);
+                        }
+                        sleepBeforeMeeting(stepsPassedBefore, ispb);
+                        System.out.println("Harpoon!");
+                        Platform.runLater(() -> monsterHealth.setProgress(Math.max(0, monsterHealth.getProgress() - HARPOON_DAMAGE)));
+                        try {//let runLater code to execute
+                            sleep(10);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        System.out.println("MonsterHunt canceled!");
-                        cancel();
-                        return null;
-                    }
-
-                    long CP = population.getPreyPopulation();
-                    double stepsPassedBefore = 1.0 / (1.0 / MONSTER_STEPS + 2.0 / FISHING_STEPS);
-                    int ispb = (int) stepsPassedBefore;
-                    int stepCounter = 0;
-                    double currentHealth = monsterHealth.getProgress();
-                    long taken = Math.round(CP * MONSTER_EAT * ispb / MONSTER_STEPS);
-
-                    System.out.println("after Exception");
-                    for (double i = 1.0 / ispb; i <= ispb; i += 1.0 / ispb) {
-                        monsterFisherPredation(true, CP, taken, i, 0, PREY_LOOT_MESSAGE, ++stepCounter, currentHealth);
-                    }
-                    sleepBeforeMeeting(stepsPassedBefore, ispb);
-                    System.out.println("Harpoon!");
-                    Platform.runLater(() -> monsterHealth.setProgress(Math.max(0, monsterHealth.getProgress() - HARPOON_DAMAGE)));
-                    try {//let runLater code to execute
-                        sleep(10);
-                    } catch (InterruptedException e) {
+                        if (monsterHealth.getProgress() <= 0) {
+                            TimeUnit.MILLISECONDS.sleep(HARPOON_TIME);
+                            showFinalImage("sample/animation/you_win.png");
+                            System.out.println("You win!");
+                            gameOver = true;
+                        }
+                    } catch (Exception e) {
                         e.printStackTrace();
-                    }
-                    if (monsterHealth.getProgress() <= 0) {
-                        youWinImage.setVisible(true);
-                        System.out.println("You win!");
-                        gameOver = true;
                     }
                     return null;
                 }
@@ -725,8 +712,6 @@ public class Controller {
         }
 
         protected void cancelled() {
-            System.out.println("Entered");
-            System.out.println("Enabled");
             pausePU = false;
             synchronized (populationLock) {
                 populationLock.notifyAll();
@@ -737,6 +722,22 @@ public class Controller {
         protected void failed() {
             System.out.println("Monster hunting failed!");
         }
+    }
+
+    private void showFinalImage(String path) {
+        Platform.runLater(() -> {
+            try {
+                mainPane.getChildren().clear();
+                ImageView iv = new ImageView(new Image(getClass().getClassLoader().getResource(path).toURI().toString()));
+                iv.setFitHeight(787.0);
+                iv.setFitWidth(1000.0);
+                mainPane.getChildren().add(iv);
+                iv.toFront();
+                iv.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private void disableButtons() {

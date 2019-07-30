@@ -13,25 +13,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="787.0" prefWidth="1000.0" snapToPixel="false" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="787.0" prefWidth="1000.0" snapToPixel="false" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
-      <AnchorPane fx:id="gameResultPane" prefHeight="787.0" prefWidth="1000.0">
+      <AnchorPane prefHeight="445.0" prefWidth="1000.0" style="-fx-background-color: #00FFFF;" AnchorPane.bottomAnchor="342.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fx:id="youWinImage" fitHeight="675.0" fitWidth="725.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@animation/ChristmasAndNewYear_NewYearNewYou-512.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="gameOverImage" fitHeight="752.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@animation/game-over.gif" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="pane1" prefHeight="445.0" prefWidth="1000.0" style="-fx-background-color: #00FFFF;" AnchorPane.bottomAnchor="342.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <ImageView fitHeight="68.0" fitWidth="107.0" layoutX="14.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="884.317756652832" AnchorPane.topAnchor="279.0">
+            <ImageView fitHeight="68.0" fitWidth="107.0" layoutX="14.0" layoutY="262.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="884.317756652832" AnchorPane.topAnchor="262.0">
                <image>
                   <Image url="@animation/cloud.png" />
                </image>

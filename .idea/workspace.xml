@@ -7,7 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="bugfix: path to the sound is now set correctly">
+      <change afterPath="$PROJECT_DIR$/src/sample/animation/you_win.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Underwater_life/sample/Controller$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Underwater_life/sample/Controller$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Underwater_life/sample/Controller$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Underwater_life/sample/Controller$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Underwater_life/sample/Controller$FishingImpact$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Underwater_life/sample/Controller$FishingImpact$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Underwater_life/sample/Controller$FishingImpact.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Underwater_life/sample/Controller$FishingImpact.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Underwater_life/sample/Controller$Monster$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Underwater_life/sample/Controller$Monster$1.class" afterDir="false" />
@@ -17,13 +20,13 @@
       <change beforePath="$PROJECT_DIR$/out/production/Underwater_life/sample/Controller$PopulationUpdater$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Underwater_life/sample/Controller$PopulationUpdater$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Underwater_life/sample/Controller$PopulationUpdater.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Underwater_life/sample/Controller$PopulationUpdater.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Underwater_life/sample/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Underwater_life/sample/Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Underwater_life/sample/animation/33-writhing-flesh.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Underwater_life/sample/animation/BAH.mp3" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Underwater_life/sample/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Underwater_life/sample/sample.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Underwater_life/tempBackend/Population.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Underwater_life/tempBackend/Population.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/animation/1206571380362214741nicubunu_RPG_map_symbols_Docks.svg.med.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/animation/rusvilla-slider-wooden-home.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/animation/33-writhing-flesh.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/animation/BAH.mp3" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/sample.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tempBackend/Population.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tempBackend/Population.java" afterDir="false" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -94,34 +97,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/sample/Controller.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="89">
-              <caret line="626" column="10" selection-start-line="626" selection-start-column="10" selection-end-line="630" selection-end-column="11" />
-              <folding>
-                <element signature="e#5304#6000#0" expanded="true" />
-                <element signature="e#5999#6000#0" expanded="true" />
-                <element signature="e#6044#6396#0" expanded="true" />
-                <element signature="e#6395#6396#0" expanded="true" />
-                <element signature="e#9464#12024#0" expanded="true" />
-                <element signature="e#12023#12024#0" expanded="true" />
-                <element signature="e#12029#12030#0" expanded="true" />
-                <element signature="e#12092#12093#0" expanded="true" />
-                <element signature="e#12650#12651#0" expanded="true" />
-                <element signature="e#12698#12699#0" expanded="true" />
-                <element signature="e#16583#16584#0" expanded="true" />
-                <element signature="e#16663#16664#0" expanded="true" />
-                <element signature="e#20019#20020#0" expanded="true" />
-                <element signature="e#20093#20094#0" expanded="true" />
-                <element signature="e#24667#27241#0" expanded="true" />
-                <element signature="e#27240#27241#0" expanded="true" />
-                <element signature="e#28121#28122#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/initialScene.fxml">
           <provider selected="true" editor-type-id="text-editor">
@@ -135,7 +110,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/InitialController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
+            <state relative-caret-position="168">
               <caret line="9" selection-start-line="9" selection-end-line="9" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -148,7 +123,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
+            <state relative-caret-position="616">
               <caret line="46" selection-start-line="46" selection-end-line="46" />
             </state>
           </provider>
@@ -157,8 +132,23 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/tempBackend/Population.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="14" column="39" selection-start-line="14" selection-start-column="39" selection-end-line="14" selection-end-column="39" />
+            <state relative-caret-position="294">
+              <caret line="16" column="30" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/sample/Controller.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="298">
+              <caret line="674" column="68" selection-start-line="674" selection-start-column="68" selection-end-line="674" selection-end-column="68" />
+              <folding>
+                <element signature="e#5367#6081#0" expanded="true" />
+                <element signature="e#6080#6081#0" expanded="true" />
+                <element signature="e#12423#12424#0" expanded="true" />
+                <element signature="e#12472#12473#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -166,8 +156,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/sample.fxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="153" column="115" selection-start-line="153" selection-start-column="115" selection-end-line="153" selection-end-column="115" />
+            <state relative-caret-position="430">
+              <caret line="337" column="18" selection-start-line="337" selection-start-column="18" selection-end-line="337" selection-end-column="18" />
             </state>
           </provider>
           <provider editor-type-id="JavaFX-Scene-Builder" />
@@ -186,10 +176,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>acti</find>
-      <find>tt</find>
-      <find>moving</find>
-      <find>mov</find>
       <find>wake</find>
       <find>wak</find>
       <find>move</find>
@@ -214,8 +200,12 @@
       <find>pausePU</find>
       <find>disableButtons</find>
       <find>harpoon</find>
-      <find>ChristmasAndNewYear_NewYearNewYou-512.png</find>
       <find>harpoonIm</find>
+      <find>moveMonsterBack</find>
+      <find>you win</find>
+      <find>Monster hunting failed!</find>
+      <find>ChristmasAndNewYear_NewYearNewYou-512.png</find>
+      <find>Monster hunting failed</find>
     </findStrings>
   </component>
   <component name="FindManager">
@@ -225,7 +215,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="RESET_MODE" value="MIXED" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -238,9 +228,9 @@
         <option value="$PROJECT_DIR$/src/sample/Tuple.java" />
         <option value="$PROJECT_DIR$/src/sample/InitialController.java" />
         <option value="$PROJECT_DIR$/src/Test.java" />
-        <option value="$PROJECT_DIR$/src/sample/sample.fxml" />
         <option value="$PROJECT_DIR$/src/sample/Main.java" />
         <option value="$PROJECT_DIR$/src/tempBackend/Population.java" />
+        <option value="$PROJECT_DIR$/src/sample/sample.fxml" />
         <option value="$PROJECT_DIR$/src/sample/Controller.java" />
       </list>
     </option>
@@ -255,8 +245,8 @@
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-10" />
     <option name="y" value="-10" />
-    <option name="width" value="1614" />
-    <option name="height" value="878" />
+    <option name="width" value="1615" />
+    <option name="height" value="879" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectReloadState">
@@ -267,6 +257,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -289,21 +281,12 @@
               <item name="underwater-life" type="b2602c69:ProjectViewProjectNode" />
               <item name="underwater-life" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="sample" type="462c0819:PsiDirectoryNode" />
-              <item name="animation" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="underwater-life" type="b2602c69:ProjectViewProjectNode" />
-              <item name="underwater-life" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="tempBackend" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -316,7 +299,7 @@
     <property name="OverrideImplement.combined" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1564485794879" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1564511496129" />
     <property name="dynamic.classpath" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
@@ -330,6 +313,7 @@
       <recent name="sample" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Andrew\Desktop\history\underwater-life\src\sample\animation" />
       <recent name="C:\Users\Andrew\IdeaProjects\Underwater_life\src\sample\animation" />
     </key>
   </component>
@@ -507,6 +491,9 @@
       <workItem from="1560413046794" duration="1039000" />
       <workItem from="1560417048773" duration="1434000" />
       <workItem from="1560961423161" duration="6374000" />
+      <workItem from="1564492288263" duration="1283000" />
+      <workItem from="1564496082100" duration="1064000" />
+      <workItem from="1564508260535" duration="2159000" />
     </task>
     <task id="LOCAL-00001" summary="feat: add monster-fisherman interaction in terms of population changes&#10;&#10;notes: &#10;1) fisherman's money and loot variables are needed for correct execution of the code&#10;2) code duplication flourishes">
       <created>1559464593876</created>
@@ -554,7 +541,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="251283000" />
+    <option name="totallyTimeSpent" value="258576000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -565,7 +552,7 @@
       <window_info id="Image Layers" order="2" />
       <window_info id="Learn" order="3" />
       <window_info id="Designer" order="4" />
-      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.6703755" weight="0.17114094" />
+      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.6703755" weight="0.12885906" />
       <window_info id="Structure" order="6" weight="0.25" />
       <window_info id="Favorites" order="7" />
       <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
@@ -576,10 +563,10 @@
       <window_info anchor="bottom" id="Debug" order="5" weight="0.41784704" />
       <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="7" weight="0.4" />
-      <window_info active="true" anchor="bottom" id="Run" order="8" visible="true" weight="0.4716714" />
+      <window_info anchor="bottom" id="Run" order="8" weight="0.4716714" />
       <window_info anchor="bottom" id="TODO" order="9" />
       <window_info anchor="bottom" id="Application Servers" order="10" />
-      <window_info anchor="bottom" id="Version Control" order="11" weight="0.3286119" />
+      <window_info anchor="bottom" id="Version Control" order="11" weight="0.08923513" />
       <window_info anchor="bottom" id="Problems" order="12" />
       <window_info anchor="bottom" id="Changes" order="13" />
       <window_info anchor="bottom" id="Profiler" order="14" />
@@ -606,7 +593,7 @@
       <window_info id="Image Layers" order="2" />
       <window_info id="Learn" order="3" />
       <window_info id="Designer" order="4" />
-      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.6703755" visible="true" weight="0.17114094" />
+      <window_info content_ui="combo" id="Project" order="5" sideWeight="0.6703755" visible="true" weight="0.13020134" />
       <window_info id="Structure" order="6" weight="0.25" />
       <window_info id="Favorites" order="7" />
       <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
@@ -617,10 +604,10 @@
       <window_info anchor="bottom" id="Debug" order="5" weight="0.41784704" />
       <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="7" weight="0.4" />
-      <window_info anchor="bottom" id="Run" order="8" weight="0.3371105" />
+      <window_info anchor="bottom" id="Run" order="8" weight="0.4716714" />
       <window_info anchor="bottom" id="TODO" order="9" />
       <window_info anchor="bottom" id="Application Servers" order="10" />
-      <window_info anchor="bottom" id="Version Control" order="11" weight="0.3286119" />
+      <window_info anchor="bottom" id="Version Control" order="11" weight="0.08923513" />
       <window_info anchor="bottom" id="Problems" order="12" />
       <window_info anchor="bottom" id="Changes" order="13" />
       <window_info anchor="bottom" id="Profiler" order="14" />
@@ -699,38 +686,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="bugfix: path to the sound is now set correctly" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/sample/Controller.java</url>
-          <line>499</line>
-          <properties />
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/sample/Controller.java</url>
-          <line>368</line>
-          <properties>
-            <option name="lambda-ordinal" value="-1" />
-          </properties>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/sample/Controller.java</url>
-          <line>376</line>
-          <properties>
-            <option name="lambda-ordinal" value="-1" />
-          </properties>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/sample/Controller.java</url>
-          <line>627</line>
-          <properties />
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="preyPeak" language="JAVA" />
@@ -775,9 +730,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/javafx-src.zip!/com/sun/glass/ui/win/WinApplication.java" />
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/jre/lib/rt.jar!/sun/misc/Unsafe.class" />
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/util/concurrent/FutureTask.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/javafx-src.zip!/javafx/beans/binding/StringExpression.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/javafx-src.zip!/javafx/beans/property/StringPropertyBase.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/javafx-src.zip!/javafx/application/Platform.java" />
@@ -805,14 +757,6 @@
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/awt/Image.java" />
     <entry file="file://$PROJECT_DIR$/src/Test.java" />
     <entry file="file://$PROJECT_DIR$/META-INF/MANIFEST.MF" />
-    <entry file="file://$PROJECT_DIR$/src/sample/initialScene.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/animation/UniformBabyishBarbet-size_restricted.gif">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -825,9 +769,7 @@
     <entry file="file://$PROJECT_DIR$/src/sample/animation/Spear_Bolt.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/animation/rusvilla-slider-wooden-home.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/animation/rusvilla-slider-wooden-home.png" />
     <entry file="file://$PROJECT_DIR$/src/sample/animation/lightwave.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -858,9 +800,7 @@
     <entry file="file://$PROJECT_DIR$/src/sample/animation/1206571380362214741nicubunu_RPG_map_symbols_Docks.svg.jjjmed.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/animation/1206571380362214741nicubunu_RPG_map_symbols_Docks.svg.med.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/animation/1206571380362214741nicubunu_RPG_map_symbols_Docks.svg.med.png" />
     <entry file="file://$PROJECT_DIR$/src/sample/animation/123.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -873,29 +813,8 @@
     <entry file="file://$PROJECT_DIR$/src/sample/animation/66e10cdbde84945f3e91455eea13990d.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/animation/66e10cdbde84945f3e91455eea13990d.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/animation/ChristmasAndNewYear_NewYearNewYou-512.png">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="46" selection-start-line="46" selection-end-line="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/InitialController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#206#207#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_212/javafx-src.zip!/javafx/scene/Node.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -908,43 +827,74 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/sample.fxml">
+    <entry file="file://$PROJECT_DIR$/src/sample/animation/33-writhing-flesh.png" />
+    <entry file="file://$PROJECT_DIR$/src/sample/animation/66e10cdbde84945f3e91455eea13990d.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/initialScene.fxml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="153" column="115" selection-start-line="153" selection-start-column="115" selection-end-line="153" selection-end-column="115" />
+        <state relative-caret-position="189">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
         </state>
       </provider>
       <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/InitialController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#206#207#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/tempBackend/Population.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="16" column="30" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="616">
+          <caret line="46" selection-start-line="46" selection-end-line="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_212/src.zip!/java/util/TimerTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="91" column="25" selection-start-line="91" selection-start-column="25" selection-end-line="91" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/sample.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="430">
+          <caret line="337" column="18" selection-start-line="337" selection-start-column="18" selection-end-line="337" selection-end-column="18" />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_212/javafx-src.zip!/javafx/fxml/FXML.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
-          <caret line="14" column="39" selection-start-line="14" selection-start-column="39" selection-end-line="14" selection-end-column="39" />
+          <caret line="38" column="18" selection-start-line="38" selection-start-column="18" selection-end-line="38" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="89">
-          <caret line="626" column="10" selection-start-line="626" selection-start-column="10" selection-end-line="630" selection-end-column="11" />
+        <state relative-caret-position="298">
+          <caret line="674" column="68" selection-start-line="674" selection-start-column="68" selection-end-line="674" selection-end-column="68" />
           <folding>
-            <element signature="e#5304#6000#0" expanded="true" />
-            <element signature="e#5999#6000#0" expanded="true" />
-            <element signature="e#6044#6396#0" expanded="true" />
-            <element signature="e#6395#6396#0" expanded="true" />
-            <element signature="e#9464#12024#0" expanded="true" />
-            <element signature="e#12023#12024#0" expanded="true" />
-            <element signature="e#12029#12030#0" expanded="true" />
-            <element signature="e#12092#12093#0" expanded="true" />
-            <element signature="e#12650#12651#0" expanded="true" />
-            <element signature="e#12698#12699#0" expanded="true" />
-            <element signature="e#16583#16584#0" expanded="true" />
-            <element signature="e#16663#16664#0" expanded="true" />
-            <element signature="e#20019#20020#0" expanded="true" />
-            <element signature="e#20093#20094#0" expanded="true" />
-            <element signature="e#24667#27241#0" expanded="true" />
-            <element signature="e#27240#27241#0" expanded="true" />
-            <element signature="e#28121#28122#0" expanded="true" />
+            <element signature="e#5367#6081#0" expanded="true" />
+            <element signature="e#6080#6081#0" expanded="true" />
+            <element signature="e#12423#12424#0" expanded="true" />
+            <element signature="e#12472#12473#0" expanded="true" />
           </folding>
         </state>
       </provider>
